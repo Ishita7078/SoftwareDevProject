@@ -75,6 +75,80 @@ app.use(
 // *****************************************************
 
 
+// redirect to login page 
+app.get('/', (req, res)=>{
+  res.redirect('/login') 
+  });
+
+app.get('/login', (req, res) => {
+  res.render('pages/login');
+});
+app.get('/register', (req, res) => {
+  res.render('pages/register'); 
+});
+
+
+// -------------------------------------  ROUTES for login.hbs   ----------------------------------------------
+app.post('/login', async (req, res) => {
+  // define username and password
+  const username = req.body.username;
+  const password = req.body.password;
+  const role     = req.body.role;
+
+  // finding user in database 
+  const findUser = `SELECT * FROM users WHERE username = $1`;
+  const user = await db.oneOrNone(findUser, [username]).catch(error => {
+    console.error('Error finding user:', message);
+    res.render('pages/login', { message: 'An error occurred during login. Please try again.' });
+    return;
+  });
+
+   // if user not found redirect to register page
+   if (!user) {
+    return res.redirect('/register');
+  }
+
+   // if user has been found --> Compare password with the hashed password 
+   const match = await bcrypt.compare(password, user.password).catch(error => {
+    console.error('Error comparing passwords:', error);
+    res.render('pages/login', { message: 'An error occurred during login.' });
+    return;
+  });
+
+  //reload login page if username or password dosen't match
+  if (!match) {
+    return res.render('pages/login', { message: 'Incorrect username or password.' });
+  }
+
+  // Save user informations in the session
+  req.session.user = user;
+  await req.session.save();
+
+  // redirect to home page when user has successfully loged in
+  res.redirect('/home');
+});
+
+// Authentication Middleware.
+const auth = (req, res, next) => {
+  if (!req.session.user) {
+    // Default to login page.
+    return res.redirect('/login');
+  }
+  next();
+};
+// Authentication Required
+app.use(auth);
+
+// -------------------------------------  ROUTES for logout.hbs   ----------------------------------------------
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    // Render the logout
+    res.render('pages/logout', { message: 'Logged out Successfully' });
+  });
+});
+
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
