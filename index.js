@@ -74,18 +74,103 @@ app.use(
 // <!-- Section 4 : API Routes -->
 // *****************************************************
 
+// TODO - Include your API routes here
 
-// redirect to login page 
-app.get('/', (req, res)=>{
-  res.redirect('/login') 
+app.get('/', (req, res) => {
+    res.redirect('/login');  // Redirects to the /login route
+});
+
+// GET route to render the registration page
+
+
+app.get('/register', (req, res) => {
+    res.render('pages/register'); // Adjust path to point to 'pages/register.hbs'
+  });
+  
+  
+  // POST route to handle registration
+  app.post('/register', async (req, res) => {
+    try {
+      // Hash the password using bcrypt
+      const hash = await bcrypt.hash(req.body.password, 10);
+  
+      // Insert the username and hashed password into the users table
+      await db.none('INSERT INTO users(username, password) VALUES($1, $2)', [req.body.username, hash]);
+  
+      // Redirect to login page after successful registration
+      res.redirect('/login');
+    } catch (error) {
+      console.log(error);
+      // Redirect back to register page if there’s an error
+      res.redirect('/register');
+    }
   });
 
-app.get('/login', (req, res) => {
-  res.render('pages/login');
+  app.get('/login', (req, res) => {
+    res.render('pages/login'); // Renders login.hbs from the 'pages' folder
+  });
+  
+  app.post('/login', async (req, res) => {
+    try {
+      // Get the user from the database by username
+      const user = await db.one('SELECT * FROM users WHERE username = $1', [req.body.username]);
+      
+      // Compare the password with the hashed password in the database
+      const match = await bcrypt.compare(req.body.password, user.password);
+      
+      if (match) {
+        // If password matches, save the user session and redirect to /discover
+        req.session.user = user;
+        req.session.save();
+        res.redirect('/discover');
+      } else {
+        // If the password doesn't match, show error message
+        res.render('pages/login', { message: 'Incorrect username or password', error: true });
+      }
+    } catch (error) {
+      console.log(error);
+      // If no user is found, redirect to the register page
+      res.redirect('/register');
+    }
+  });
+ 
+
+ 
+// Discover route
+app.get('/discover', async (req, res) => {
+  try {
+      // Make an API call to Ticketmaster
+      const response = await axios({
+          url: `https://app.ticketmaster.com/discovery/v2/events.json`,
+          method: 'GET',
+          params: {
+              apikey: process.env.API_KEY,
+              keyword: 'music', // example keyword, can be dynamic
+              size: 10
+          }
+      });
+
+      // Render discover page with events
+res.render('pages/discover', { results: response.data._embedded.events });
+  } catch (error) {
+      console.error(error);
+      res.render('pages/discover', { results: [], message: 'Failed to fetch events' });
+  }
 });
-app.get('/register', (req, res) => {
-  res.render('pages/register'); 
+
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+      if (err) {
+          return res.redirect('/discover'); // Redirect back if there’s an error destroying the session
+      }
+      res.render('pages/logout', { message: 'Logged out successfully!' });
+  });
 });
+
+
+
 
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
