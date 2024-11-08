@@ -28,7 +28,12 @@ Follow these steps to set up and run the project locally:
    ```
 
 3. **Run Docker**  
-   In your terminal, navigate to the project folder, then run the following command to start the containers:
+   In your terminal, navigate to the project folder
+   ```bash
+         cd /SoftwareDevProject/ProjectSourceCode
+    ```
+
+    Run the following command to start the containers:
    ```bash
    docker compose up -d
    ```
