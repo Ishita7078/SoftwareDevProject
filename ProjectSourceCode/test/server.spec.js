@@ -19,3 +19,41 @@ describe('Testing Add User API', () => {
         });
     });
   });
+
+  //positive test case
+  describe('Testing Register API', () => {
+    // Positive test case: Valid registration
+    it('should register a user successfully with valid input', (done) => {
+        chai.request(server)
+            .post('/register')
+            .send({
+                email: 'testuser@example.com',
+                username: 'testuser',
+                password: 'ValidPassword123'
+            })
+            .end((err, res) => {
+                res.should.have.status(200); // Expecting status code 200 for success
+                res.body.message.should.equal('User registered successfully'); // Adjust message as per your API response
+                done();
+            });
+    });
+});
+//negative test case
+
+describe('Testing Register API', () => {
+  // Negative test case: Invalid registration (e.g., missing password)
+  it('should return an error for invalid registration input', (done) => {
+      chai.request(server)
+          .post('/register')
+          .send({
+              email: 'invaliduser@example.com',
+              username: 'invaliduser'
+              // Missing 'password' field
+          })
+          .end((err, res) => {
+              res.should.have.status(400); // Expecting status code 400 for invalid input
+              res.body.message.should.equal('Password is required'); // Adjust message as per your API response
+              done();
+          });
+  });
+});
