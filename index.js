@@ -156,6 +156,47 @@ const auth = (req, res, next) => {
 // Authentication Required
 app.use(auth);
 
+// ------------------------------------- ROUTES for edit.hbs ------------------------------------------------
+
+// Route that displays the edit profile form
+app.get('/edit', async (req, res) => {
+  try{
+    const username = req.session.user.username;
+    const findUser = `SELECT username, name, email, gender, age FROM users WHERE username = $1`;
+    const user = await db.one(findUser, [username]);
+    res.render('pages/edit', { user })
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    res.render('pages/edit', { message: 'An error occurred while fetching user data.'});
+  }
+});
+
+// Route to handle  form submission
+app.post('/edit', async (req, res) =>{
+  try {
+    const username = req.session.user.username;
+    const {name, email, gender, age} = req.body;
+
+    const updateUser = `
+      UPDATE users
+      SET name = $1, email = $2, gender = $3, age = $4
+      WHERE username = $5`;
+    await db.none(updateUser, [name, email, gender, age, username]);
+
+    // Update session user object
+    req.session.user.name = name;
+    req.session.user.email = email;
+    req.session.user.gender = gender;
+    req.session.user.age = age;
+    await req.session.save();
+
+    res.redirect('/login');
+  } catch (err) {
+    console.error('Error updating user data:', err);
+    res.render('pages/edit', {message: 'An error occurred while updating your profile.'});
+  }
+});
+
 // -------------------------------------  ROUTES for logout.hbs   ----------------------------------------------
 
 app.get('/logout', (req, res) => {
