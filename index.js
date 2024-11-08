@@ -88,6 +88,23 @@ app.get('/register', (req, res) => {
 });
 
 
+//------------------------------------ Routs for Register.hbs  ----------------------------------------------------
+app.post('/register', async (req, res) => {
+  const hash = await bcrypt.hash(req.body.password, 10);
+  
+  // Insert username and hashed password into the 'users' table
+  const insertUser = `INSERT INTO users (username, password, name, email, gender, age) VALUES ($1, $2, $3, $4, $5, $6);`;
+
+  // Use await to insert into the database and handle success/failure
+  const result = await db.any(insertUser, [req.body.username, hash]);
+
+
+  if (result) {
+    res.redirect('/login');
+  }
+});
+
+
 // -------------------------------------  ROUTES for login.hbs   ----------------------------------------------
 app.post('/login', async (req, res) => {
   // define username and password
