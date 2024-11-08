@@ -1,0 +1,40 @@
+<header>
+    <nav class="navbar navbar-expand-sm border-bottom"></nav>
+    <div class="container">
+        
+      <!-- Home button -->
+      <a class="navbar-brand me-auto" href="/home">Home</a>
+
+     <button
+       class="navbar-toggler ms-auto"
+       type="button"
+       data-bs-toggle="collapse"
+       data-bs-target="#navbar-collapse"
+       aria-controls="navbar"
+       aria-expanded="false"
+       aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+       <!-- dropdown with picture and other options -->
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <!-- set user profile picture to dropdown-->
+            <a class="nav-link dropdown-toggle d-flex" href="#" id="navDropdown" role="button">
+              <img src="####" alt="User Profile" class="rounded-circle" width="20" height="20" id="navPic">
+            </a>
+
+            <!-- add dropdown items-->
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/teams">Teams</a></li>
+              <li><a class="dropdown-item" href="/calendar">Calendar</a></li>
+              <li><a class="dropdown-item" href="/whiteboard">Whiteboard</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
