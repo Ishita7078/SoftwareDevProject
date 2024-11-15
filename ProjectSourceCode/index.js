@@ -87,20 +87,34 @@ app.get('/register', (req, res) => {
   res.render('pages/register'); 
 });
 
+app.get('/project', (req, res) => {
+  res.render('pages/project'); 
+});
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {
-  const hash = await bcrypt.hash(req.body.password, 10);
-  
-  // Insert username and hashed password into the 'users' table
-  const insertUser = `INSERT INTO users (username, password, name, email, gender, age) VALUES ($1, $2, $3, $4, $5, $6);`;
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    const usern = req.body.username;
+    const name = req.body.name;
+    const email = req.body.email;
+    const gender = req.body.gender;
+    const age = parseInt(req.body.age, 10)
 
-  // Use await to insert into the database and handle success/failure
-  const result = await db.any(insertUser, [req.body.username, hash]);
+    console.log("Registering user with data:", { usern, hash, name, email, gender, age });
 
+    //insert user into the database
+    const insertUser = `
+      INSERT INTO users (username, password, name, email, gender, age)
+      VALUES ($1, $2, $3, $4, $5, $6);
+    `;
+    await db.none(insertUser, [usern, hash, name, email, gender, age]);
 
-  if (result) {
     res.redirect('/login');
+  } catch (err) {
+    console.error("Error during registration:", err);
+    res.redirect('/register');
   }
 });
 
@@ -110,7 +124,6 @@ app.post('/login', async (req, res) => {
   // define username and password
   const username = req.body.username;
   const password = req.body.password;
-  const role     = req.body.role;
 
   // finding user in database 
   const findUser = `SELECT * FROM users WHERE username = $1`;
@@ -125,12 +138,19 @@ app.post('/login', async (req, res) => {
     return res.redirect('/register');
   }
 
-   // if user has been found --> Compare password with the hashed password 
-   const match = await bcrypt.compare(password, user.password).catch(error => {
+   // if user has been found --> Compare password with the hashed password, .trim() removes excess whitespace
+  const match = await bcrypt.compare(password, user.password.trim()).catch(error => { 
     console.error('Error comparing passwords:', error);
     res.render('pages/login', { message: 'An error occurred during login.' });
     return;
   });
+
+console.log('Password chars:', [...password].map(c => c.charCodeAt(0)));
+console.log('User password chars:', [...user.password].map(c => c.charCodeAt(0)));
+
+  console.log('Plain password:', password);
+  console.log('password:', user.password);
+  console.log('match:', match);
 
   //reload login page if username or password dosen't match
   if (!match) {
@@ -142,7 +162,7 @@ app.post('/login', async (req, res) => {
   await req.session.save();
 
   // redirect to home page when user has successfully loged in
-  res.redirect('/home');
+  res.redirect('/project');
 });
 
 // Authentication Middleware.
