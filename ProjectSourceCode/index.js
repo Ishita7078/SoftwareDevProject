@@ -16,6 +16,7 @@ const axios = require('axios'); // To make HTTP requests from our server. We'll 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
 // *****************************************************
+app.use(express.static(__dirname + '/public')); //allows express to access local css, javascript, etc in public file
 
 // create `ExpressHandlebars` instance and configure the layouts and partials dir.
 const hbs = handlebars.create({

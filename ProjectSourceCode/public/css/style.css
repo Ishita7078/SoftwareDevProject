@@ -5,22 +5,54 @@ body{
 
 }
 footer {
-    margin-top: auto; /* Push footer down to the bottom of the page */
     text-align: center; /* Center the text inside the footer */
-  }
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    background-color: white;
+}
 
 .pageTitle{
+    margin-top:10px;
     color:#2D2D2D;
     font-size:32px;
+    margin-left:200px;
 
+}
+.pageTitleDivide{
+    border-color:#D4D3DE; 
+    border-width: 2px; 
+}
+#whiteBoardContainer{
+    position: relative;
+    left:200px;
+    width:1200px;
+    min-width: 1200px;
+    height: 900px;
+    min-height: 900px;
+    margin-bottom:20px;
+    background-color:#F4F4FF;
 }
 #whiteBoard{
     background-color: white;
-    width: 1000px;
-    min-width: 1000px;
+    width: 1100px;
+    min-width: 1100px;
     min-height: 700px;
     height: 700px;
+    position:absolute;
+    top: 70px;   /* 100px from the top of the container */
+    left: 50px;   /* 50px from the left of the container */
     outline: 2px solid #D4D3DE;
     border-radius: 30px;
-    display: inline-block;
+}
+#newStickyButton{
+    background-color: white;
+    position: absolute;
+    width:90px;
+    height:50px;
+    right:0;
+    top:0;
+    outline: 2px solid #D4D3DE;
+    border-radius: 10px;
+    text-align: center;
 }
