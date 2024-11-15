@@ -3,6 +3,7 @@ body{
     color:#2D2D2D;
     background: #F4F4FF;
     overflow-y: auto; /* Enable vertical scrolling */
+    text-align: center;
 
 }
 footer {
@@ -21,7 +22,6 @@ nav{
     margin-top:10px;
     color:#2D2D2D;
     font-size:32px;
-    margin-left:200px;
 }
 .pageTitleDivide{
     border-color:#D4D3DE; 
@@ -111,8 +111,7 @@ nav{
     justify-content: center;
     align-items: center;
 }
-    text-align: center;
-}
+
 /*--calendar---*/
   
   .event:hover {
