@@ -26,7 +26,10 @@ Follow these steps to set up and run the project locally:
    SESSION_SECRET="super duper secret!"
    API_KEY="<TODO: Replace with your Ticketmaster API key if you are using lab 8 as a base>"
    ```
-
+   
+   ```bash
+   npm install express multer path
+   ```
 3. **Run Docker**  
    In your terminal, navigate to the project folder
    ```bash
