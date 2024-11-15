@@ -1,0 +1,39 @@
+<div class="container">
+  <h2 class="mt-4">Files</h2>
+
+  {{> message}} 
+
+  <div class="row">
+    {{#each results}}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{{#if this.images}} {{this.images.[0].url}} {{else}} 'https://pbs.twimg.com/media/FPj5fPYaIAMiyS6.jpg' {{/if}}" class="card-img-top" alt="{{this.name}}">
+          <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">{{this.dates.start.localDate}} {{this.dates.start.localTime}}</p>
+            <div class="card-footer">
+              <small class="text-body-secondary">Release date:</small>
+            </div>
+            <a href="{{this.url}}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
+    <!-- Add new file card -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">Add New File</h5>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="file" name="file" class="form-control-file mb-2" required>
+            </div>
+            <button type="submit" class="btn btn-success">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
