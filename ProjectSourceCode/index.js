@@ -96,6 +96,36 @@ app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
+//multer library for handling file uploads
+const multer = require('multer'); 
+//array to track details of uploaded files 
+const uploadedFiles = []; 
+
+//set up Multer for file uploads
+const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
+
+//route to handle file uploads
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    //If no file was uploaded, redirect the user back to the files page
+    return res.redirect('/files');
+  }
+
+  //save uploaded file details 
+  uploadedFiles.push({ 
+    filename: req.file.originalname, //original name 
+    path: req.file.path, //path where the file is stored 
+  });
+
+  //redirect to the files page after a successful upload
+  res.redirect('/files');
+});
+
+//route to display the files page
+app.get('/files', (req, res) => {
+  res.render('pages/files', { uploadedFiles });
+});
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {
