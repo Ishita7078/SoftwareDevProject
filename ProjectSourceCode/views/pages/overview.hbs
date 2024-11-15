@@ -1,0 +1,62 @@
+
+<div class="container p-3" style="align-items: normal;">
+    <progressbar>
+        <div class="progress" role="progressbar" aria-label="Animated striped" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+        </div>
+    </progressbar>
+
+    <announcement class="container">
+        <div class="card" style="">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="card-title">Announcements</h2>
+                    </div>
+                <div class="col text-end">
+                        <button type="button" class="btn card-subtitle mb-2" data-bs-toggle="modal" data-bs-target="#announceModal" data-bs-whatever="">Update</button>
+                </div>
+                <p class="card-text" id="announce">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pellentesque, massa sed sollicitudin hendrerit, eros purus pharetra felis, ac pellentesque ligula nunc id lorem.</p>
+            </div>
+        </div>
+    </announcement>
+
+    <div class="container text-center"> <!-- Display Users Todos -->
+        <div class="row row-cols-4">
+            {{#each results}}
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5> <!-- Display Username -->
+                            <p class="card-text"><small class="text-body-secondary">{{dates.start.localDate}}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">{{dates.start.localTime}}</small></p>
+                        </div>
+                    </div>
+              </div>   
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="announceModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="">Update Announcement</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send Announcement</button>
+      </div>
+    </div>
+  </div>
+</div>

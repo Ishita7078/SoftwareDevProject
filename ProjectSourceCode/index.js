@@ -96,6 +96,10 @@ app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
+app.get('/teams', (req, res) =>{
+  res.render('pages/teams');
+});
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {
@@ -231,17 +235,21 @@ app.get('/logout', (req, res) => {
   });
 });
 
-module.exports = app;
 
-const server = app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+// --------------------  this commmented lines broke my code ---------------
+//module.exports = app;
+
+//----- calendar -------
+
+app.get('/calendar', (req, res) => {
+  res.render('pages/calendar', { layout: 'main', title: 'Calendar' });
 });
 
-module.exports = server; 
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
 // starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
+//app.listen(3000);
+module.exports = app.listen(3000); 
 console.log('Server is listening on port 3000');

@@ -111,3 +111,19 @@ nav{
     justify-content: center;
     align-items: center;
 }
+    text-align: center;
+}
+/*--calendar---*/
+  
+  .event:hover {
+    cursor: pointer;
+  }
+  
+  .hidden {
+    visibility: hidden;
+    height: 0;
+  }
+  
+  #calendar {
+    height: 100vh;
+  }
