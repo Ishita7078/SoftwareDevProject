@@ -1,5 +1,6 @@
 body{
     font-family:'Lato', sans-serif;
+    color:#2D2D2D;
     background: #F4F4FF;
     overflow-y: auto; /* Enable vertical scrolling */
 
@@ -11,21 +12,68 @@ footer {
     width: 100%;
     background-color: white;
 }
+nav{
+    background-color: white;
+    font-size: 24px;
+}
 
 .pageTitle{
     margin-top:10px;
     color:#2D2D2D;
     font-size:32px;
     margin-left:200px;
-
 }
 .pageTitleDivide{
     border-color:#D4D3DE; 
     border-width: 2px; 
 }
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+  }
+/* Login Page */
+.registerLoginTitle{
+    font-size: 36px;
+    font-weight:bolder;
+    padding:10px;
+    color: #FF9721;
+}
+#submitContainer{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    justify-content: space-evenly;
+    max-width: 1000px;
+}
+.btn-primary{
+    width: 100px;
+    height: 50px;
+    border-radius: 50px;
+}
+.form-label{
+    font-size: 24px;
+    padding:5px;
+}
+.loginTextBox{
+    align-content: center;
+    width: 300px;
+    height: 50px;
+    outline: 2px solid #D4D3DE;
+    border-radius: 30px;
+}
+.registerTextBox{
+    align-content: center;
+    width: 200px;
+    height: 30px;
+    outline: 2px solid #D4D3DE;
+    border-radius: 30px;
+}
+
 #whiteBoardContainer{
     position: relative;
-    left:200px;
+    left:10%;
     width:1200px;
     min-width: 1200px;
     height: 900px;
@@ -54,5 +102,12 @@ footer {
     top:0;
     outline: 2px solid #D4D3DE;
     border-radius: 10px;
-    text-align: center;
+    display: flex; /* Use flexbox to center the content */
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+}
+#newStickyPlus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
