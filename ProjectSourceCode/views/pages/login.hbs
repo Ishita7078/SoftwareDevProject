@@ -1,11 +1,11 @@
 {{> message}}
 
-<div class="container">
-  <h2>Login</h2>
+<div class="center">
+  <h2 class = "registerLoginTitle">Login</h2>
   <form action="/login" method="POST">
     <div class="mb-3">
-      <label for="username" class="form-label">Username:</label>
-      <input
+      <label for="username" class="form-label">Username</label>
+      <input class = "loginTextBox"
         type="text"
         name="username"
         id="username"
@@ -14,8 +14,8 @@
       />
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password:</label>
-      <input
+      <label for="password" class="form-label">Password</label>
+      <input class = "loginTextBox"
         type="password"
         name="password"
         id="password"
@@ -23,10 +23,12 @@
         required
       />
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-  <p>
-    Don't have an account?
-    <a href="/register">Register here</a>.
-  </p>
+  <div id = submitContainer>
+      <button type="submit" id = "loginbutton"class="btn btn-primary">Login</button>
+    </form>
+    <p>
+      Don't have an account?
+      <a href="/register">Register here</a>.
+    </p>
+  </div>
 </div>
