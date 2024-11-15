@@ -1,4 +1,27 @@
-### Release Notes Week of 11/10/24
+### Release Notes Week of 11/1/24
+### Overview of Improvements
+* Created project board
+* Created user stories
+* Explored how user stories and story points works
+### New Features
+### Deep:
+* Added user stories
+### Sepehr:
+* Added user stories
+### Ragan:
+* Added user stories
+### Ishita:
+* Added user stories
+### Alexander:
+* Added user stories
+### Quinn:
+* Added User stories
+
+### Bug Fixes
+### Alex
+* Worked on fixing/creating basic website files
+
+### Release Notes Week of 11/10/s24
 > This week we focused on getting a skeleton of our application up and running: we wanted to have most of the pages implemented on a low level and make sure our databases, routes, and partials were working accordingly.
 ### Overview of Improvements
 * Webpages up and running
@@ -44,3 +67,7 @@
 ### Ishita:
 * Fixed login and registration pages and got them fully running
 * Fixed database bugs in create.sql
+
+
+
+
