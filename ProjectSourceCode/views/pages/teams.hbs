@@ -1,0 +1,25 @@
+{{> nav}}
+
+<div class="header">
+  <a href="/main">Back to Main Menu</a>
+</div>
+
+<h1>My Team</h1>
+
+<div class="team-container">
+  {{#each team}}
+  <div class="team-member">
+    <!-- Default avatar image required for the line below -->
+    <!--<img src="/default-avatar.png" alt="Avatar">-->
+    <p><strong>{{name}}</strong></p>
+    <p>{{email}}</p>
+    <p>{{other}}</p>
+  </div>
+  {{/each}}
+</div>
+
+<div class="footer">
+  <a href="/manage-team">Add/Remove team members here</a>
+</div>
+
+{{> footer}}
