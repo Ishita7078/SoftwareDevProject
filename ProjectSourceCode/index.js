@@ -244,6 +244,13 @@ app.get('/logout', (req, res) => {
 //});
 
 //module.exports = server; 
+//----- calendar -------
+app.get('/calendar', (req, res) => {
+  res.render('pages/calendar', { layout: 'main', title: 'Calendar', calendarPage: true });
+});
+
+
+
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
