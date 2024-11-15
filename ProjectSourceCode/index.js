@@ -234,11 +234,10 @@ app.get('/logout', (req, res) => {
 module.exports = app;
 
 //----- calendar -------
+
 app.get('/calendar', (req, res) => {
-  res.render('pages/calendar', { layout: 'main', title: 'Calendar', calendarPage: true });
+  res.render('pages/calendar', { layout: 'main', title: 'Calendar' });
 });
-
-
 
 
 // *****************************************************
