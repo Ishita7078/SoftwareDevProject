@@ -91,6 +91,10 @@ app.get('/project', (req, res) => {
   res.render('pages/project'); 
 });
 
+app.get('/whiteboard', (req, res) => {
+  res.render('pages/whiteboard'); 
+});
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {

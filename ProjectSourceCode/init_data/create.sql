@@ -15,7 +15,7 @@ Creating a table for teams
   created_at: time of team creation
 */
 CREATE TABLE teams (
-  team_id INT AUTO_INCREMENT PRIMARY KEY,
+  team_id SERIAL PRIMARY KEY,
   team_name VARCHAR(100) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -26,11 +26,13 @@ Creating a table for the many-to-many relationship from users to teams
   username: from users table
   role: is either "member" or "admin", but will default to "member" if none is specified
   joined_at: time of user joining team
+  need to define enum beforehand
 */
+CREATE TYPE role AS ENUM ('member', 'admin'); 
 CREATE TABLE team_members (
   team_id INT NOT NULL,
   username VARCHAR(50) NOT NULL,
-  role ENUM('member', 'admin') DEFAULT 'member',
+  role role DEFAULT 'member',
   joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (team_id, username),
   FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
