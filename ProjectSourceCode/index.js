@@ -96,6 +96,10 @@ app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
+app.get('/teams', (req, res) =>{
+  res.render('pages/teams');
+});
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {
