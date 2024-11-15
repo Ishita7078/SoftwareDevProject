@@ -231,17 +231,20 @@ app.get('/logout', (req, res) => {
   });
 });
 
-module.exports = app;
 
-const server = app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
-});
+// --------------------  this commmented lines broke my code ---------------
+//module.exports = app;
 
-module.exports = server; 
+//const server = app.listen(3000, () => {
+  //console.log('Server is listening on port 3000');
+//});
+
+//module.exports = server; 
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
 // starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
+//app.listen(3000);
+module.exports = app.listen(3000); 
 console.log('Server is listening on port 3000');
