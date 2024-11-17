@@ -1,6 +1,6 @@
 # SoftwareDevProject
 ## Brief Application description
-`Whiteboard` is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
+`Whiteboard`![Logo](./logo.png) is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
 
 **Features include:**
 
@@ -11,7 +11,7 @@
 ## Technology Stack used for the project
 ## Prerequisites to run the application - Any software that needs to be installed to run the application
 ## Instructions on how to run the application locally.
-# Project Setup
+# Project Setup :gear:
 
 Follow these steps to set up and run the project locally:
 
