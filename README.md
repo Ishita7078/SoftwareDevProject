@@ -1,6 +1,7 @@
 # SoftwareDevProject
 ## Brief Application description
-`Whiteboard`![Logo](./logo.png) is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
+`Whiteboard` <img src="./logo.png" alt="Logo" width="30"/> is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
+
 
 **Features include:**
 
