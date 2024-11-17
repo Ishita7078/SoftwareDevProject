@@ -1,6 +1,6 @@
 # SoftwareDevProject
 ## Brief Application description
-`Whiteboard` <img src="./logo.png" alt="Logo" width="30"/> is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
+**Whiteboard** <img src="./logo.png" alt="Logo" width="30"/> is a teamwork and collaboration platform designed to streamline group project management and enhance accountability. It introduces a visual approach to effectively manage progress with various dedicated features.
 
 
 **Features include:**
@@ -47,7 +47,7 @@ Follow these steps to set up and run the project locally:
    ```
 
 Your setup is complete! The project should now be running.
-## Contributors:
+## Contributors: 👨‍💻
 | Name              | Email                        | GitHub Username |
 |-------------------|------------------------------|-----------------|
 | Ragan Lee         | ragan.lee@colorado.edu       | raaganl         |
