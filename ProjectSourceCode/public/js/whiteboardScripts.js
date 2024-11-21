@@ -69,3 +69,73 @@ function drop(ev) {
         whiteboardBacking.appendChild(document.getElementById(data));
     }
 }
+
+let stickyCounter = 0; //ensure unique id for each sticky
+
+function createNewSticky() {
+    const whiteBoard = document.getElementById('whiteBoard');
+    const newSticky = document.createElement('div');
+    const dropdown = document.getElementById('stickyColorDropdown');
+    const selectedColor = dropdown.value;
+    dropdown.style.display = 'none';
+    
+    //attributes and styles for new sticky
+    newSticky.className = 'sticky';
+    newSticky.id = `sticky${stickyCounter}`;
+    newSticky.draggable = true;
+    newSticky.style.backgroundColor = selectedColor;
+
+    //intial position
+    newSticky.style.left = '10px';
+    newSticky.style.top = '10px';
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('deleteButton');
+    deleteButton.textContent = 'Delete';
+    deleteButton.style.display = 'none';
+    deleteButton.onclick = function() {
+        deleteSticky(newSticky.id);
+    };
+    newSticky.appendChild(deleteButton);
+
+    const stickyContent = document.createElement('p');
+    stickyContent.contentEditable = 'true';
+    stickyContent.textContent = 'Click to edit.';
+    newSticky.appendChild(stickyContent);
+
+    newSticky.addEventListener('dragstart', drag);
+
+    newSticky.addEventListener('click', function(event) {
+        if (deleteButton.style.display === 'none') {
+            deleteButton.style.display = 'block';
+            const rect = newSticky.getBoundingClientRect();
+            deleteButton.style.left = `${rect.left + rect.width + 5}px`;
+            deleteButton.style.top = `${rect.top + rect.height / 2 - 10}px`;
+        } else {
+            deleteButton.style.display = 'none';
+        }
+
+    });
+
+    //click outside sticky to hide delete button
+    document.addEventListener('click', function(event) {
+        if (!newSticky.contains(event.target)) {
+            deleteButton.style.display = 'none';
+        }
+    });
+    whiteBoard.appendChild(newSticky);
+
+    stickyCounter++;
+}
+
+function toggleColorDropdown(event) {
+    const dropdown = document.getElementById('stickyColorDropdown');
+    if (event.target.tagName === 'I' || event.target.id === 'newStickyButton') {
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function deleteSticky(id) {
+    const sticky = document.getElementById(id);
+    sticky.parentNode.removeChild(sticky);
+}
