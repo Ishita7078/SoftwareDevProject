@@ -96,8 +96,34 @@ app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
-app.get('/teams', (req, res) =>{
-  res.render('pages/teams');
+//multer library for handling file uploads
+const multer = require('multer'); 
+//array to track details of uploaded files 
+const uploadedFiles = []; 
+
+//set up Multer for file uploads
+const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
+
+//route to handle file uploads
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    //If no file was uploaded, redirect the user back to the files page
+    return res.redirect('/files');
+  }
+
+  //save uploaded file details 
+  uploadedFiles.push({ 
+    filename: req.file.originalname, //original name 
+    path: req.file.path, //path where the file is stored 
+  });
+
+  //redirect to the files page after a successful upload
+  res.redirect('/files');
+});
+
+//route to display the files page
+app.get('/files', (req, res) => {
+  res.render('pages/files', { uploadedFiles });
 });
 
 
@@ -234,6 +260,41 @@ app.get('/logout', (req, res) => {
     res.render('pages/logout', { message: 'Logged out Successfully' });
   });
 });
+
+//------------------------------------ Routes for teams.hbs  ----------------------------------------------------
+app.get('/teams', async (req, res) => {
+  try {
+    const username = req.session.user.username;
+
+    // Get all teams the user is a member of
+    const teamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1
+    `;
+    const teams = await db.any(teamsQuery, [username]);
+
+    // For each team, get its members
+    for (let team of teams) {
+      const membersQuery = `
+        SELECT u.username, u.name, u.email, tm.role
+        FROM users u
+        JOIN team_members tm ON u.username = tm.username
+        WHERE tm.team_id = $1
+      `;
+      const members = await db.any(membersQuery, [team.team_id]);
+      team.members = members;
+    }
+
+    res.render('pages/teams', { teams });
+  } catch (err) {
+    console.error('Error fetching teams:', err);
+    res.render('pages/teams', { message: 'An error occurred while fetching teams.' });
+  }
+});
+
+
 
 
 // --------------------  this commmented lines broke my code ---------------
