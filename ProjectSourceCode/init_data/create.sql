@@ -52,7 +52,8 @@ CREATE TABLE files (
   file_name VARCHAR(255) NOT NULL,
   file_path VARCHAR(255) NOT NULL,
   uploader_username VARCHAR(50) NOT NULL,
-  team_id INT NOT NULL,
+  team_id INT ,
+  visibility VARCHAR(10) DEFAULT 'self',
   FOREIGN KEY (uploader_username) REFERENCES users(username) ON DELETE CASCADE,
   FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
 );
