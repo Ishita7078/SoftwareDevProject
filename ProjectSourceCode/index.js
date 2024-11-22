@@ -295,6 +295,37 @@ app.get('/teams', async (req, res) => {
 });
 
 
+//------------------------------------ Routes for manage_team.hbs  ----------------------------------------------------
+app.get('/manage-team', async (req, res) => {
+  try {
+    const username = req.session.user.username;
+
+    // Get teams where the user is an admin
+    const adminTeamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1 AND tm.role = 'admin'
+    `;
+    const adminTeams = await db.any(adminTeamsQuery, [username]);
+
+    // Get teams where the user is a member
+    const memberTeamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1 AND tm.role = 'member'
+    `;
+    const memberTeams = await db.any(memberTeamsQuery, [username]);
+
+    res.render('pages/manage_team', { adminTeams, memberTeams });
+  } catch (err) {
+    console.error('Error fetching manage teams:', err);
+    res.render('pages/manage_team', { message: 'An error occurred while fetching manage teams.' });
+  }
+});
+
+
 
 
 // --------------------  this commmented lines broke my code ---------------
