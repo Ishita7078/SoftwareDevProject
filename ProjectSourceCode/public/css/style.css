@@ -1,27 +1,68 @@
 body{
     font-family:'Lato', sans-serif;
+    font-weight:normal;
     color:#2D2D2D;
     background: #F4F4FF;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
+    text-align: center;
+    min-height: 100vh;
+    
 
 }
 footer {
-    text-align: center; /* Center the text inside the footer */
-    position: fixed;
-    bottom:0;
+    text-align: center; 
+    margin-top: auto;
     width: 100%;
+    height:50px;
     background-color: white;
+}
+a{
+    color: #687CFF;
 }
 nav{
     background-color: white;
     font-size: 24px;
 }
 
+.loginbutton{
+    background-color: #687CFF;
+    border-style: solid;
+    border-color: #687CFF;
+    padding:10px;
+    margin:20px;
+    border-radius: 30px;
+    outline-color: #687CFF;
+    width: 100px;
+    min-width: 100px;
+    height:50px;
+    min-height:50px;
+    color:white;
+    font-size:larger;
+    font-weight: 700;
+}
+
+.logo{
+    width:100px;
+    height:100px; 
+    box-shadow: 0px 5px 5px 0px rgba(133,133,133,0.34);
+    margin-top: 70px;
+    margin-bottom: 30px;
+}
+.textLogo{
+    display: flex;
+    position:absolute;
+    left:0;
+    top:5;
+    margin:10px;
+    width:200px;
+    min-width: 100px;
+    height:auto;
+}
 .pageTitle{
     margin-top:10px;
     color:#2D2D2D;
+    font-weight: bolder;
     font-size:32px;
-    margin-left:200px;
 }
 .pageTitleDivide{
     border-color:#D4D3DE; 
@@ -35,7 +76,7 @@ nav{
   }
 /* Login Page */
 .registerLoginTitle{
-    font-size: 36px;
+    font-size: 40px;
     font-weight:bolder;
     padding:10px;
     color: #FF9721;
@@ -58,9 +99,11 @@ nav{
 }
 .loginTextBox{
     align-content: center;
-    width: 300px;
+    width: 400px;
     height: 50px;
-    outline: 2px solid #D4D3DE;
+    padding: 10px;
+    outline:#D4D3DE;
+    border-style: solid;
     border-radius: 30px;
 }
 .registerTextBox{
@@ -69,6 +112,16 @@ nav{
     height: 30px;
     outline: 2px solid #D4D3DE;
     border-radius: 30px;
+}
+
+/*Whiteboard*/
+.sticky{
+    width: 200px;
+    height: 200px;
+    box-shadow: 0px 5px 5px 0px rgba(133,133,133,0.34);
+    background-color: rgb(75, 82, 213);
+    cursor: grab;
+    position:absolute;
 }
 
 #whiteBoardContainer{
@@ -88,29 +141,28 @@ nav{
     min-height: 700px;
     height: 700px;
     position:absolute;
-    top: 70px;   /* 100px from the top of the container */
-    left: 50px;   /* 50px from the left of the container */
+    top: 70px;   
+    left: 50px;  
     outline: 2px solid #D4D3DE;
     border-radius: 30px;
 }
 #newStickyButton{
     background-color: white;
     position: absolute;
-    width:90px;
+    width:120px;
     height:50px;
     right:0;
     top:0;
     outline: 2px solid #D4D3DE;
     border-radius: 10px;
-    display: flex; /* Use flexbox to center the content */
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
 }
 #newStickyPlus{
     display: flex;
     justify-content: center;
     align-items: center;
-}
     text-align: center;
 }
 /*--calendar---*/

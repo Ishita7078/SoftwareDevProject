@@ -261,6 +261,72 @@ app.get('/logout', (req, res) => {
   });
 });
 
+//------------------------------------ Routes for teams.hbs  ----------------------------------------------------
+app.get('/teams', async (req, res) => {
+  try {
+    const username = req.session.user.username;
+
+    // Get all teams the user is a member of
+    const teamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1
+    `;
+    const teams = await db.any(teamsQuery, [username]);
+
+    // For each team, get its members
+    for (let team of teams) {
+      const membersQuery = `
+        SELECT u.username, u.name, u.email, tm.role
+        FROM users u
+        JOIN team_members tm ON u.username = tm.username
+        WHERE tm.team_id = $1
+      `;
+      const members = await db.any(membersQuery, [team.team_id]);
+      team.members = members;
+    }
+
+    res.render('pages/teams', { teams });
+  } catch (err) {
+    console.error('Error fetching teams:', err);
+    res.render('pages/teams', { message: 'An error occurred while fetching teams.' });
+  }
+});
+
+
+//------------------------------------ Routes for manage_team.hbs  ----------------------------------------------------
+app.get('/manage-team', async (req, res) => {
+  try {
+    const username = req.session.user.username;
+
+    // Get teams where the user is an admin
+    const adminTeamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1 AND tm.role = 'admin'
+    `;
+    const adminTeams = await db.any(adminTeamsQuery, [username]);
+
+    // Get teams where the user is a member
+    const memberTeamsQuery = `
+      SELECT t.team_id, t.team_name
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1 AND tm.role = 'member'
+    `;
+    const memberTeams = await db.any(memberTeamsQuery, [username]);
+
+    res.render('pages/manage_team', { adminTeams, memberTeams });
+  } catch (err) {
+    console.error('Error fetching manage teams:', err);
+    res.render('pages/manage_team', { message: 'An error occurred while fetching manage teams.' });
+  }
+});
+
+
+
 
 // --------------------  this commmented lines broke my code ---------------
 //module.exports = app;
