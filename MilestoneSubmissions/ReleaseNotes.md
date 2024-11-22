@@ -1,4 +1,5 @@
 ### Release Notes Week of 11/22/24
+> This week we worked on getting all of our pages functional and improving the user experience. 
 ### Overview of Improvements
 * Added functionality to all pages
 * Began stlying all of website
@@ -26,7 +27,7 @@
 ### Quinn:
 * Fixed team page and edited routes for team page
 
-### Release Notes Week of 11/10/s24
+### Release Notes Week of 11/10/24
 > This week we focused on getting a skeleton of our application up and running: we wanted to have most of the pages implemented on a low level and make sure our databases, routes, and partials were working accordingly.
 ### Overview of Improvements
 * Webpages up and running
