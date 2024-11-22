@@ -99,97 +99,89 @@ app.get('/whiteboard', (req, res) => {
 app.get('/overview', (req, res) => {
   res.render('pages/overview'); 
 });
-/*
-//multer library for handling file uploads
+//---------------------multer library for handling file uploads-----------------------
 const multer = require('multer'); 
 //array to track details of uploaded files 
-const uploadedFiles = []; 
-
-//set up Multer for file uploads
-const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
-
-//route to handle file uploads
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    //If no file was uploaded, redirect the user back to the files page
-    return res.redirect('/files');
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'uploads'));
+  },
+  filename: (req, file, cb) => {
+    // Use the original name of the file
+    cb(null, file.originalname);
   }
-
-  //save uploaded file details 
-  uploadedFiles.push({ 
-    filename: req.file.originalname, //original name 
-    path: req.file.path, //path where the file is stored 
-  });
-
-  //redirect to the files page after a successful upload
-  res.redirect('/files');
 });
-
-//route to display the files page
-app.get('/files', (req, res) => {
-  res.render('pages/files', { uploadedFiles });
-});
-*/
-//multer library for handling file uploads
-const multer = require('multer'); 
-//array to track details of uploaded files 
 const uploadedFiles = []; 
 
 //set up Multer for file uploads
-const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
+const upload = multer({ storage }); // Files will be uploaded to the 'uploads/' directory
 
-//route to handle file uploads
-  app.post('/upload', upload.single('file'), (req, res) => {
-    const { team_id, visibility } = req.body; //who has access to this file, (self or team)
-    const uploader_id = req.user.id; //save uploader id
-    const filePath = path.join(__dirname, 'uploads', req.file.filename);
-    
-    // default visibility is 'self' if no team_id is provided
-      const fileVisibility = visibility || (team_id ? 'team' : 'self');
-    // store data in DB
-    db.query(
-      `INSERT INTO files (file_name, file_path, uploader_id, team_id) VALUES (?, ?, ?, ?)`,
-      [req.file.originalname, filePath, uploader_id, team_id|| null, fileVisibility],
-      (err) => {
-        if (err) {
-          console.error('Database error:', err);
-          return res.status(500).send('Error saving file metadata.');
-        }
-        // Redirect to files page after a successful upload
-        res.redirect('/files');
+//r---------------------oute to handle file uploads------------------------------
+  app.post('/upload', upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.redirect('/files');
       }
-    );
+  
+      const uploader_id = req.session.user.username;
+      const visibility = req.body.visibility || 'self';
+  
+      // query to find user's team
+      const teamQuery = `
+        SELECT t.team_id
+        FROM teams t
+        JOIN team_members tm ON t.team_id = tm.team_id
+        WHERE tm.username = $1`;
+      const userTeam = await db.oneOrNone(teamQuery, [uploader_id]);
+      const team_id = userTeam ? userTeam.team_id : null;
+  
+      const filePath = path.join(__dirname, 'uploads', req.file.filename);
+  
+      // store file inf in DB
+      await db.none(
+        `INSERT INTO files (file_name, file_path, uploader_username, team_id) 
+        VALUES ($1, $2, $3, $4)`,
+        [req.file.originalname, filePath, uploader_id, team_id]
+      );
+  
+      res.redirect('/files');
+    } catch (err) {
+      console.error('Upload error:', err);
+      res.status(500).send('Error uploading the file.');
+    }
   });
+  
 
-//route to display the files page
+//--------------------route to display the files page------------------------
 app.get('/files', async (req, res) => {
   try {
-    const user_id = req.session.user.id;
-    const team_id = req.session.user.team_id; // get logged-in user's team_id
+    const username = req.session.user.username;
 
-    // Query to get files based on visibility and team
-    let query = 'SELECT * FROM files WHERE visibility = $1 OR (team_id = $2 AND visibility = $3)';
-    let params = ['self', team_id, 'team'];
+    // query to find user's team
+    const teamQuery = `
+      SELECT t.team_id
+      FROM teams t
+      JOIN team_members tm ON t.team_id = tm.team_id
+      WHERE tm.username = $1`;
+    const userTeam = await db.oneOrNone(teamQuery, [username]);
 
-    // If the user is not in a team, they can only see their own files
-    if (!team_id) {
-      query = 'SELECT * FROM files WHERE visibility = $1 OR uploader_id = $2';
-      params = ['self', user_id];
-    }
+    // find visible files
+    const filesQuery = userTeam
+      ? `SELECT * FROM files WHERE visibility = 'self' OR (team_id = $1 AND visibility = 'team')`
+      : `SELECT * FROM files WHERE visibility = 'self' OR uploader_username = $1`;
 
-    const results = await db.any(query, params); // Fetch files using pg-promise method
+    const params = userTeam ? [userTeam.team_id] : [username];
+    const uploadedFiles = await db.any(filesQuery, params);
 
-    // Render the files page and pass the results to the template
-    
+    res.render('pages/files', { uploadedFiles });
   } catch (err) {
     console.error('DB error:', err);
     res.status(500).send('Error retrieving files.');
   }
 });
-
-
+//--------------------route to show uploaded files ------------------------
 const fs = require('fs');
-
 app.get('/files/:filename', (req, res) => {
   const fileName = req.params.filename;
 
