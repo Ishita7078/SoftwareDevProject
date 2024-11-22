@@ -13,6 +13,13 @@
             <div class="form-group">
               <input type="file" name="file" class="form-control-file mb-2" required>
             </div>
+            <div class="form-group">
+              <label for="visibility">Visibility</label>
+              <select name="visibility" class="form-control" required>
+                <option value="self">Self</option>
+                <option value="team">Team</option>
+              </select>
+            </div>
             <button type="submit" class="btn btn-success">Upload</button>
           </form>
         </div>
@@ -24,7 +31,16 @@
     <div class="col-md-4 mb-4">
       <div class="card">
         <div class="card-body text-center">
-          <h5 class="card-title">{{filename}}</h5>
+          <h5 class="card-title">{{file_name}}</h5>
+          
+          <!-- Display additional file details -->
+          <p class="card-text">Visibility: {{visibility}}</p> <!-- Display file visibility -->
+          <p class="card-text">Uploaded by: {{uploader_id}}</p> <!-- Assuming `uploader_id` is available -->
+
+          <!-- Display download link -->
+          <div>
+            <a href="/files/{{file_name}}" class="btn btn-primary mb-2">Download</a>
+          </div>
         </div>
       </div>
     </div>
