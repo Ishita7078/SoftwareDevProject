@@ -28,13 +28,73 @@
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">{{name}}</h5> <!-- Display Username -->
-                              <p class="card-text"><small class="text-body-secondary">{{dates.start.localDate}}</small></p>
-                              <p class="card-text"><small class="text-body-secondary">{{dates.start.localTime}}</small></p>
+                              <h5 class="card-title">{{title}}</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">{{name}}</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary">{{dates}}</small></p> <!-- Time -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                              </div>
                           </div>
                       </div>
                 </div>   
               {{/each}}
+              <!-- FIXME: testing card-->
+                  <div class="col">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">Eat Pancakes</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">Jane Doe</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary">11/22/2024</small></p> <!-- Time -->
+                              <input type="checkbox" class="btn-check" id="btn-check-1-outlined" Completed autocomplete="off" checked>
+                              <label class="btn btn-outline-success" for="btn-check-1-outlined">Completed</label><br>
+                          </div>
+                      </div>
+                </div>  
+                  <div class="col">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">Go to the movie</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">Bob</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> <!-- Time -->
+                              <input type="checkbox" class="btn-check" id="btn-check-2-outlined" Completed autocomplete="off">
+                              <label class="btn btn-outline-success" for="btn-check-2-outlined">Completed</label><br>
+                          </div>
+                      </div>
+                </div>  
+                  <div class="col">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">Sleep</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">Ross Bob</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary">4/25/2077</small></p> <!-- Time -->
+                              <input type="checkbox" class="btn-check" id="btn-check-3-outlined" Completed autocomplete="off">
+                              <label class="btn btn-outline-success" for="btn-check-3-outlined">Completed</label><br>
+                          </div>
+                      </div>
+                </div>  
+                  <div class="col">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">Work and Suffer</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">Alice</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary"></small></p> <!-- Time -->
+                              <input type="checkbox" class="btn-check" id="btn-check-4-outlined" Completed autocomplete="off" checked>
+                              <label class="btn btn-outline-success" for="btn-check-4-outlined">Completed</label><br>
+                          </div>
+                      </div>
+                </div>
+                  <div class="col">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">Stare at the wall</h5> <!-- Title -->
+                              <p class="card-text"><small class="text-body">David</small></p> <!-- Username -->
+                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> <!-- Time -->
+                              <input type="checkbox" class="btn-check" id="btn-check-5-outlined" Completed autocomplete="off">
+                              <label class="btn btn-outline-success" for="btn-check-5-outlined">Completed</label><br>
+                          </div>
+                      </div>
+                </div>  
+              <!-- END FIXING CARD-->
           </div>
       </div>
   </div>
