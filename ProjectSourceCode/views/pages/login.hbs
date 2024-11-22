@@ -1,11 +1,12 @@
-{{> message}}
-
-<div class="container">
-  <h2>Login</h2>
+{{> nav isLoginPage=true }}
+<div class="center">
+  <img src="/img/textLogo.jpg" class="textLogo">
+  <img src="/img/logo.png" class="logo">
+  <h2 class="registerLoginTitle">Login</h2>
   <form action="/login" method="POST">
     <div class="mb-3">
-      <label for="username" class="form-label">Username:</label>
-      <input
+      <label for="username" class="form-label">Username</label>
+      <input class="loginTextBox"
         type="text"
         name="username"
         id="username"
@@ -14,8 +15,8 @@
       />
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password:</label>
-      <input
+      <label for="password" class="form-label">Password</label>
+      <input class="loginTextBox"
         type="password"
         name="password"
         id="password"
@@ -23,7 +24,9 @@
         required
       />
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <div id="submitContainer">
+      <button type="submit" class="loginbutton">Login</button>
+    </div>
   </form>
   <p>
     Don't have an account?

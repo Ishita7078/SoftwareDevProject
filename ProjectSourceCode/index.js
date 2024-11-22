@@ -77,8 +77,9 @@ app.use(
 
 
 // redirect to login page 
-app.get('/', (req, res)=>{
-  res.redirect('/login') 
+
+app.get('/login', (req, res) => {
+    res.render('pages/login', { isLoginPage: true });
   });
 
 app.get('/login', (req, res) => {
@@ -89,13 +90,132 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/project', (req, res) => {
-  res.render('pages/project'); 
+  res.render('pages/project', { isLoginPage: false });
 });
 
 app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
+app.get('/overview', (req, res) => {
+  res.render('pages/overview'); 
+});
+/*
+//multer library for handling file uploads
+const multer = require('multer'); 
+//array to track details of uploaded files 
+const uploadedFiles = []; 
+
+//set up Multer for file uploads
+const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
+
+//route to handle file uploads
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    //If no file was uploaded, redirect the user back to the files page
+    return res.redirect('/files');
+  }
+
+  //save uploaded file details 
+  uploadedFiles.push({ 
+    filename: req.file.originalname, //original name 
+    path: req.file.path, //path where the file is stored 
+  });
+
+  //redirect to the files page after a successful upload
+  res.redirect('/files');
+});
+
+//route to display the files page
+app.get('/files', (req, res) => {
+  res.render('pages/files', { uploadedFiles });
+});
+*/
+//multer library for handling file uploads
+const multer = require('multer'); 
+//array to track details of uploaded files 
+const uploadedFiles = []; 
+
+//set up Multer for file uploads
+const upload = multer({ dest: 'uploads/' }); // Files will be uploaded to the 'uploads/' directory
+
+//route to handle file uploads
+  app.post('/upload', upload.single('file'), (req, res) => {
+    const { team_id, visibility } = req.body; //who has access to this file, (self or team)
+    const uploader_id = req.user.id; //save uploader id
+    const filePath = path.join(__dirname, 'uploads', req.file.filename);
+    
+    // default visibility is 'self' if no team_id is provided
+      const fileVisibility = visibility || (team_id ? 'team' : 'self');
+    // store data in DB
+    db.query(
+      `INSERT INTO files (file_name, file_path, uploader_id, team_id) VALUES (?, ?, ?, ?)`,
+      [req.file.originalname, filePath, uploader_id, team_id|| null, fileVisibility],
+      (err) => {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).send('Error saving file metadata.');
+        }
+        // Redirect to files page after a successful upload
+        res.redirect('/files');
+      }
+    );
+  });
+
+//route to display the files page
+app.get('/files', async (req, res) => {
+  try {
+    const user_id = req.session.user.id;
+    const team_id = req.session.user.team_id; // get logged-in user's team_id
+
+    // Query to get files based on visibility and team
+    let query = 'SELECT * FROM files WHERE visibility = $1 OR (team_id = $2 AND visibility = $3)';
+    let params = ['self', team_id, 'team'];
+
+    // If the user is not in a team, they can only see their own files
+    if (!team_id) {
+      query = 'SELECT * FROM files WHERE visibility = $1 OR uploader_id = $2';
+      params = ['self', user_id];
+    }
+
+    const results = await db.any(query, params); // Fetch files using pg-promise method
+
+    // Render the files page and pass the results to the template
+    
+  } catch (err) {
+    console.error('DB error:', err);
+    res.status(500).send('Error retrieving files.');
+  }
+});
+
+
+const fs = require('fs');
+
+app.get('/files/:filename', (req, res) => {
+  const fileName = req.params.filename;
+
+  // Sanitize filename to prevent directory traversal
+  const sanitizedFileName = path.basename(fileName);
+
+  // Define the file's path in the uploads directory
+  const filePath = path.join(__dirname, 'uploads', sanitizedFileName);
+
+  // Check if the file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('File not found:', filePath);
+      return res.status(404).send('File not found.');
+    }
+
+    // Send the file to the client for download
+    res.download(filePath, sanitizedFileName, (err) => {
+      if (err) {
+        console.error('Error during file download:', err);
+        return res.status(500).send('An error occurred while downloading the file.');
+      }
+    });
+  });
+});
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {
@@ -178,6 +298,19 @@ const auth = (req, res, next) => {
   }
   next();
 };
+
+const auth = (req, res, next) => {
+  const openRoutes = ['/login', '/register', '/logout'];
+  if (openRoutes.includes(req.path)) {
+    return next();
+  }
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+app.use(auth);
+
 // Authentication Required
 app.use(auth);
 
@@ -233,16 +366,16 @@ app.get('/logout', (req, res) => {
 
 module.exports = app;
 
-//----- calendar -------
-
-app.get('/calendar', (req, res) => {
-  res.render('pages/calendar', { layout: 'main', title: 'Calendar' });
+const server = app.listen(3000, () => {
+  console.log('Server is listening on port 3000');
 });
 
+module.exports = server; 
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
 // starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
+//app.listen(3000);
+module.exports = app.listen(3000); 
 console.log('Server is listening on port 3000');
