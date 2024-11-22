@@ -414,7 +414,128 @@ app.get('/manage-team', async (req, res) => {
   }
 });
 
+app.post('/create-team', async (req, res) => {
+  try {
+    const team_name = req.body.team_name;
+    const username = req.session.user.username;
 
+    // Insert into teams table
+    const insertTeamQuery = `
+      INSERT INTO teams (team_name)
+      VALUES ($1)
+      RETURNING team_id
+    `;
+    const result = await db.one(insertTeamQuery, [team_name]);
+    const team_id = result.team_id;
+
+    // Add the creator as admin in team_members
+    const insertMemberQuery = `
+      INSERT INTO team_members (team_id, username, role)
+      VALUES ($1, $2, 'admin')
+    `;
+    await db.none(insertMemberQuery, [team_id, username]);
+
+    res.redirect('/manage-team');
+  } catch (err) {
+    console.error('Error creating team:', err);
+    res.redirect('/manage-team');
+  }
+});
+
+app.post('/add-member', async (req, res) => {
+  try {
+    const team_id = req.body.team_id;
+    const member_username = req.body.username;
+    const username = req.session.user.username;
+
+    // Check if the current user is admin of the team
+    const adminCheckQuery = `
+      SELECT role FROM team_members
+      WHERE team_id = $1 AND username = $2
+    `;
+    const result = await db.one(adminCheckQuery, [team_id, username]);
+
+    if (result.role !== 'admin') {
+      // Not authorized
+      return res.redirect('/manage-team');
+    }
+
+    // Check if the user to be added exists
+    const userCheckQuery = `
+      SELECT username FROM users WHERE username = $1
+    `;
+    const userExists = await db.oneOrNone(userCheckQuery, [member_username]);
+
+    if (!userExists) {
+      // User does not exist
+      return res.redirect('/manage-team');
+    }
+
+    // Add member to team_members
+    const insertMemberQuery = `
+      INSERT INTO team_members (team_id, username, role)
+      VALUES ($1, $2, 'member')
+      ON CONFLICT DO NOTHING
+    `;
+    await db.none(insertMemberQuery, [team_id, member_username]);
+
+    res.redirect('/manage-team');
+  } catch (err) {
+    console.error('Error adding member:', err);
+    res.redirect('/manage-team');
+  }
+});
+
+app.post('/remove-member', async (req, res) => {
+  try {
+    const team_id = req.body.team_id;
+    const member_username = req.body.username;
+    const username = req.session.user.username;
+
+    // Check if the current user is admin of the team
+    const adminCheckQuery = `
+      SELECT role FROM team_members
+      WHERE team_id = $1 AND username = $2
+    `;
+    const result = await db.one(adminCheckQuery, [team_id, username]);
+
+    if (result.role !== 'admin') {
+      // Not authorized
+      return res.redirect('/manage-team');
+    }
+
+    // Remove member from team_members
+    const deleteMemberQuery = `
+      DELETE FROM team_members
+      WHERE team_id = $1 AND username = $2
+    `;
+    await db.none(deleteMemberQuery, [team_id, member_username]);
+
+    res.redirect('/manage-team');
+  } catch (err) {
+    console.error('Error removing member:', err);
+    res.redirect('/manage-team');
+  }
+});
+
+app.post('/leave-team', async (req, res) => {
+  try {
+    const team_id = req.body.team_id;
+    const username = req.session.user.username;
+
+    // Remove user from team_members
+    const deleteMemberQuery = `
+      DELETE FROM team_members
+      WHERE team_id = $1 AND username = $2
+    `;
+    await db.none(deleteMemberQuery, [team_id, username]);
+
+    res.redirect('/manage-team');
+  } catch (err) {
+    console.error('Error leaving team:', err);
+    res.redirect('/manage-team');
+  }
+});
 
 
 // --------------------  this commmented lines broke my code ---------------
