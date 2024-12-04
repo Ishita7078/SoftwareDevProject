@@ -118,14 +118,14 @@ const uploadedFiles = [];
 const upload = multer({ storage }); // Files will be uploaded to the 'uploads/' directory
 
 //r---------------------oute to handle file uploads------------------------------
-  app.post('/upload', upload.single('file'), async (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
         return res.redirect('/files');
       }
   
       const uploader_id = req.session.user.username;
-      const visibility = req.body.visibility || 'self';
+      const visibility = req.body.visibility === 'team' ? 'team' :'self';
   
       // query to find user's team
       const teamQuery = `
@@ -140,9 +140,9 @@ const upload = multer({ storage }); // Files will be uploaded to the 'uploads/' 
   
       // store file inf in DB
       await db.none(
-        `INSERT INTO files (file_name, file_path, uploader_username, team_id) 
-        VALUES ($1, $2, $3, $4)`,
-        [req.file.originalname, filePath, uploader_id, team_id]
+        `INSERT INTO files (file_name, file_path, uploader_username, team_id, visibility) 
+        VALUES ($1, $2, $3, $4, $5)`,
+        [req.file.originalname, filePath, uploader_id, team_id, visibility]
       );
   
       res.redirect('/files');
@@ -164,14 +164,15 @@ app.get('/files', async (req, res) => {
       FROM teams t
       JOIN team_members tm ON t.team_id = tm.team_id
       WHERE tm.username = $1`;
-    const userTeam = await db.oneOrNone(teamQuery, [username]);
+    const userTeam = await db.oneOrNone(teamQuery, [username]);//each user can be membar of 0/1 group
 
     // find visible files
     const filesQuery = userTeam
-      ? `SELECT * FROM files WHERE visibility = 'self' OR (team_id = $1 AND visibility = 'team')`
-      : `SELECT * FROM files WHERE visibility = 'self' OR uploader_username = $1`;
+      ? `SELECT * FROM files WHERE (visibility = 'self' AND uploader_username = $1)
+                                    OR (team_id = $2 AND visibility = 'team')`
+      : `SELECT * FROM files WHERE visibility = 'self' AND uploader_username = $1`;
 
-    const params = userTeam ? [userTeam.team_id] : [username];
+    const params = userTeam ? [username, userTeam.team_id] : [username];
     const uploadedFiles = await db.any(filesQuery, params);
 
     res.render('pages/files', { uploadedFiles });
