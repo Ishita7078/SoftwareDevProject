@@ -208,6 +208,68 @@ app.get('/files/:filename', (req, res) => {
     });
   });
 });
+//--------------------route to Delete a uploaded file ------------------------
+app.post('/delete-file/:id', async(req, res) => {
+  try{
+    const file_id= req.params.id;
+    const username=req.session.user.username;
+
+    //check if the user is the Owener of file
+    const file = await db.oneOrNone(
+      'SELECT * FROM files WHERE file_id= $1  AND uploader_username=$2',
+      [file_id, username]
+    );
+
+    if(!file){
+      return res.status(403).send('You are Not authorized to delete this file.');
+    }
+    //Delete the file record from DB
+    await db.none('DELETE FROM files WHERE file_id= $1', [file_id]);
+    
+    //Delete the file from Server
+    const file_path=path.join(__dirname,'uploads', file.file_path);
+    fs.unlink(file_path, (err) =>{
+      if (err) console.error('File Deletation Err', err);
+    });
+
+    res.redirect('/files');
+  } catch (err){
+    console.error('Error during Deleteing', err);
+    return res.status(500).send('An Error occured whiکد کle Deleteing the File');
+  }
+});
+
+// --------------------route to handle editing a file ------------------------
+app.post('/edit-file/:id', async (req, res) => {
+  try {
+    const file_id = req.params.id;
+    const username = req.session.user.username;
+    const newVisibility = req.body.visibility;  // دریافت visibility جدید
+
+    // بررسی اینکه آیا کاربر مالک فایل است
+    const file = await db.oneOrNone(
+      'SELECT * FROM files WHERE file_id = $1 AND uploader_username = $2',
+      [file_id, username]
+    );
+
+    if (!file) {
+      return res.status(403).send('You are not authorized to edit this file.');
+    }
+
+    // بروزرسانی visibility در دیتابیس
+    await db.none(
+      'UPDATE files SET visibility = $1 WHERE file_id = $2',
+      [newVisibility, file_id]
+    );
+
+    res.redirect('/files');
+  } catch (err) {
+    console.error('Error during file edit:', err);
+    return res.status(500).send('An error occurred while editing the file.');
+  }
+});
+
+
 
 //------------------------------------ Routs for Register.hbs  ----------------------------------------------------
 app.post('/register', async (req, res) => {

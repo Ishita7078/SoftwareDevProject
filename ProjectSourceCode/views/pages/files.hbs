@@ -40,6 +40,12 @@
           <!-- Display download link -->
           <div>
             <a href="/files/{{file_name}}" class="btn btn-primary mb-2">Download</a>
+            <a href="/edit-file/{{file_id}}" class="btn btn-secondary mb-2">Edit</a>
+            <!-- Delete button -->
+            <form action="/delete-file/{{file_id}}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+
           </div>
         </div>
       </div>
