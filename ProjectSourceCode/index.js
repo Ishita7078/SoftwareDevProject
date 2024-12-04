@@ -244,9 +244,12 @@ app.post('/edit-file/:id', async (req, res) => {
   try {
     const file_id = req.params.id;
     const username = req.session.user.username;
-    const newVisibility = req.body.visibility;  // دریافت visibility جدید
+    const newVisibility = req.body.visibility;  // New visibility
 
-    // بررسی اینکه آیا کاربر مالک فایل است
+    if (!newVisibility) {
+      return res.status(400).send('Visibility is required.');
+    }
+    // check if the user is owner of the files
     const file = await db.oneOrNone(
       'SELECT * FROM files WHERE file_id = $1 AND uploader_username = $2',
       [file_id, username]
@@ -256,7 +259,7 @@ app.post('/edit-file/:id', async (req, res) => {
       return res.status(403).send('You are not authorized to edit this file.');
     }
 
-    // بروزرسانی visibility در دیتابیس
+    // Update Visibility in DB
     await db.none(
       'UPDATE files SET visibility = $1 WHERE file_id = $2',
       [newVisibility, file_id]
