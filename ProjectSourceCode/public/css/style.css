@@ -247,5 +247,33 @@ body {
     font-size: 1.5rem;
     margin: 0;
   }
-  
-  
+
+  /*------Fiels page-------*/
+  #files_delete_button{
+    width:120px;
+    height:50px;
+    border-radius: 20px;
+    justify-content: center; 
+    align-items: right; 
+}
+#files_edit_button{
+  width:120px;
+  height:50px;
+  border-radius: 20px;
+  justify-content: center; 
+  margin-top: 8px;
+}
+#files_download_button{
+  width:120px;
+  height:50px;
+  border-radius: 20px;
+  justify-content: center; 
+  align-items: right; 
+}
+
+#files_name{
+  background-color:beige;
+  border-radius: 20px;
+  justify-content: center; 
+  align-items: right; 
+}

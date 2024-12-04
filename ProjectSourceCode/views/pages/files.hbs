@@ -31,33 +31,36 @@
     <div class="col-md-4 mb-4">
       <div class="card">
         <div class="card-body text-center">
-          <h5 class="card-title">{{file_name}}</h5>
-          
+          <div id="files_name" class="container">
+          <h5  class="card-title">{{file_name}}</h5>
+          </div>
           <!-- Display additional file details -->
           <p class="card-text">Visibility: {{visibility}}</p> <!-- Display file visibility -->
           <p class="card-text">Uploaded by: {{uploader_username}}</p> <!-- Assuming `uploader_id` is available -->
 
           <!-- Display download link -->
           <div>
-            <a href="/files/{{file_name}}" class="btn btn-primary mb-2">Download</a>
             <div>
-            <form action="/edit-file/{{file_id}}" method="POST" style="display:inline;">
+              <a id="files_download_button" href="/files/{{file_name}}" class="btn btn-primary mb-2">Download</a>
+            </div>
+            
+              <!-- Edit Button-->
+              <form action="/edit-file/{{file_id}}" method="POST" style="display:inline;">
+                <label for="visibility">Select New Visibility</label>
+                <div id="files_button_container" class="button-container">
+                <select name="visibility" class="form-control mb-2" required>
+                  <option value="self" {{#if visibility}}selected{{/if}}>Self</option>
+                  <option value="team" {{#unless visibility}}selected{{/unless}}>Team</option>
+                </select>
+                
+                <button id="files_edit_button" type="submit" class="btn btn-secondary mb-2">Edit</button>  
+              </form>
 
-              
-              <label for="visibility">Select New Visibility</label>
-              <select name="visibility" class="form-control mb-2" required>
-                <option value="self" {{#if visibility}}selected{{/if}}>Self</option>
-                <option value="team" {{#unless visibility}}selected{{/unless}}>Team</option>
-              </select>
-              <button type="submit" class="btn btn-secondary mb-2">Edit</button>
-              
-            </form>
+              <!-- Delete button -->
+              <form  action="/delete-file/{{file_id}}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                  <button id="files_delete_button"  type="submit" class="btn btn-danger">Delete</button>
+              </form>
 
-
-            <!-- Delete button -->
-            <form action="/delete-file/{{file_id}}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
             </div>
           </div>
         </div>
