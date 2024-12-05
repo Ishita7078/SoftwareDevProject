@@ -1,7 +1,7 @@
 INSERT INTO users (username, password, name, email, gender, age)
 VALUES
-('test1', '$2a$10$0nuiAcxmpycVE73Ilf.dHep/XZvy1/v3/iy6eZFw.xWUChCS1xMZ.', 'name1', 'test1@gmail.com', 'M', 1),
-('test2', '$2a$10$iLkX7nwuNYFlaxpleHZ5dOyEdzFFARQEpdfDRjYS8qSwX1EmOPbR.', 'name2', 'test2@gmail.com', 'F', 2),
+('test1', '$2a$10$.ibpzSrVxs/Hpk4md6.Vy..IFxvivmgSLUGXShCSQBgueItEfpsfm', 'name1', 'test1@gmail.com', 'M', 1),
+('test2', '$2a$10$dJBQrCItR8cNc4gQVIUxreA.C8vrsLn6r.nYVUDeEw0O4JMk7Wruu', 'name2', 'test2@gmail.com', 'F', 2),
 ('whiteboard', '$2a$10$hq8fT1uhfpm.QBJ/kwjDHu/mSuE8pNJZRKIOzTB6q9BQs1H17C3GK', 'Whiteboard CSCI 3308', 'whiteboard@gmail.com', 'F', 101),
 ('John', '$2a$10$DPFpcK2d0qL7V58Dh4J4aeYz9b/UMmoobGS5YOOpklYqV0LXmpUWe', 'John Doe', 'JohnDoe@yahoo.com', 'M', 20),
 ('Jane', '$2a$10$mKU1FafayDBgNZ0G0b9W8uKmKTynui37IPg0nYqqoX5PMYuQKlHku', 'Jane Doe', 'JaneDoe@hotmail.com', 'F', 23),
