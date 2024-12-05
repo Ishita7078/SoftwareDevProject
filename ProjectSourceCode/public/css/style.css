@@ -179,3 +179,101 @@ nav{
   #calendar {
     height: 100vh;
   }
+
+/*---projectpage----*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .projectTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    flex: 1;
+  }
+  
+  .new-project-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .new-project-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .project-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .project-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .project-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 1rem;
+  }
+  
+  .project-card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  /*------Fiels page-------*/
+  #files_delete_button{
+    width:120px;
+    height:50px;
+    border-radius: 20px;
+    justify-content: center; 
+    align-items: right; 
+}
+#files_edit_button{
+  width:120px;
+  height:50px;
+  border-radius: 20px;
+  justify-content: center; 
+  margin-top: 8px;
+}
+#files_download_button{
+  width:120px;
+  height:50px;
+  border-radius: 20px;
+  justify-content: center; 
+  align-items: right; 
+}
+
+#files_name{
+  background-color:beige;
+  border-radius: 20px;
+  justify-content: center; 
+  align-items: right; 
+}

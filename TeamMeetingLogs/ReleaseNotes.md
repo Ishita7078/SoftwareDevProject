@@ -1,33 +1,27 @@
-### Release Notes Week of 11/22/24
-> This week we worked on getting all of our pages functional and improving the user experience. 
+### Release Notes Week of 11/1/24
 ### Overview of Improvements
-* Added functionality to all pages
-* Began stlying all of website
-* Fixing routing issues
+* Created project board
+* Created user stories
+* Explored how user stories and story points works
 ### New Features
 ### Deep:
-* Added project home page
-* Changed calendar styling
+* Added user stories
 ### Sepehr:
-* Implemented functionality on file page and modified routes
-* Created database for files
+* Added user stories
 ### Ragan:
-* Implemented whiteboard functionality where you can drag sticky notes around whiteboard
-* Finished styling login and register pages
+* Added user stories
 ### Ishita:
-* Implemented feature where you can create and delete sticky notes of various colors
-* Got Whiteboard up and running on the clouds
+* Added user stories
 ### Alexander:
-* Implemented functionality on overview page including functional progress bar
-* Added task cards that can be checked if completed
+* Added user stories
 ### Quinn:
-* Created manage teams page for adding and removing members
+* Added User stories
 
 ### Bug Fixes
-### Quinn:
-* Fixed team page and edited routes for team page
+### Alex
+* Worked on fixing/creating basic website files
 
-### Release Notes Week of 11/10/24
+### Release Notes Week of 11/10/s24
 > This week we focused on getting a skeleton of our application up and running: we wanted to have most of the pages implemented on a low level and make sure our databases, routes, and partials were working accordingly.
 ### Overview of Improvements
 * Webpages up and running
@@ -36,7 +30,9 @@
 * UI begining to be implemented
 ### New Features
 ### Deep:
-* Working on removing drop down and home page on login page and register page
+* Added a Calendar page
+* Added Javascript for calendar
+* Added routes to Index.js to support Calendar
 ### Sepehr:
 * Improved web application's funcionality and structure
 * Added dropdown menu to the nav bar
@@ -74,26 +70,4 @@
 
 
 
-### Release Notes Week of 11/1/24
-### Overview of Improvements
-* Created project board
-* Created user stories
-* Explored how user stories and story points works
-### New Features
-### Deep:
-* Added user stories
-### Sepehr:
-* Added user stories
-### Ragan:
-* Added user stories
-### Ishita:
-* Added user stories
-### Alexander:
-* Added user stories
-### Quinn:
-* Added User stories
-
-### Bug Fixes
-### Alex
-* Worked on fixing/creating basic website files
 

@@ -38,3 +38,22 @@ CREATE TABLE team_members (
   FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
+
+/* 
+Creating a table for files
+  file_id: unique identifier for each file
+  file_name: original name of the file
+  file_path: server path where the file is stored
+  uploader_username: user who uploaded the file (foreign key to users table)
+  team_id: team associated with the file (foreign key to teams table)
+*/
+CREATE TABLE files (
+  file_id SERIAL PRIMARY KEY,
+  file_name VARCHAR(255) NOT NULL,
+  file_path VARCHAR(255) NOT NULL,
+  uploader_username VARCHAR(50) NOT NULL,
+  team_id INT ,
+  visibility VARCHAR(10) DEFAULT 'self',
+  FOREIGN KEY (uploader_username) REFERENCES users(username) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+);
