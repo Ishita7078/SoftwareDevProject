@@ -1,4 +1,5 @@
   <script src="/js/overview.js"></script> 
+
   <div class="container p-3" style="align-items: normal;">
       <progressbar onload="editProgress()">
           <div class="progress" role="progressbar" aria-label="Animated striped" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
@@ -16,36 +17,49 @@
                       <div class="col text-end">
                           <button type="button" class="btn card-subtitle mb-2" data-bs-toggle="modal" data-bs-target="#announceModal" data-bs-whatever="">Update</button>
                       </div>
-                      <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pellentesque, massa sed sollicitudin hendrerit, eros purus pharetra felis, ac pellentesque ligula nunc id lorem.</p>
+                      <p class="card-text text-start" id="description">{{team_announcement}}</p>
+                      <!--
+                      <p class="card-text text-start" id="description">Its empty here...</p>
+                      -->
                   </div>
               </div>
           </div>
       </announcement>
 
       <div class="container text-center"> <!-- Display Users Todos -->
+            <div class="col text-end">  <!-- Add Todo-->
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#announceModal" data-bs-whatever="">Add</button>
+        </div>
           <div class="row row-cols-4">
-              {{#each results}}
+              {{#each todos}}
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">{{title}}</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">{{name}}</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary">{{dates}}</small></p> <!-- Time -->
+                              <h5 class="card-title">{{todo_title}}</h5> 
+                              <p class="card-text"><small class="text-body">{{todo_username}}</small></p> 
+                              <p class="card-text"><small class="text-body-secondary">{{todo_date}}</small></p> 
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                {{#if todo_completed}}
+                                <input type="checkbox" class="btn-check" id="btn-check-{{todo_id}}-outlined" Completed autocomplete="off" checked onclick="editProgress()">
+                                <label class="btn btn-outline-success" for="btn-check-{{todo_id}}-outlined">Completed</label><br>
+                                {{else}}
+                              <input type="checkbox" class="btn-check" id="btn-check-{{todo_id}}-outlined" Completed autocomplete="off" onclick="editProgress()">
+                              <label class="btn btn-outline-success" for="btn-check-{{todo_id}}-outlined">Completed</label><br>
+                                {{/if}}
                               </div>
                           </div>
                       </div>
                 </div>   
               {{/each}}
               <!-- FIXME: testing card-->
+              <!--
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">Eat Pancakes</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">Jane Doe</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary">11/22/2024</small></p> <!-- Time -->
-                              <input type="checkbox" class="btn-check" id="btn-check-1-outlined" Completed autocomplete="off" checked>
+                              <h5 class="card-title">Eat Pancakes</h5> 
+                              <p class="card-text"><small class="text-body">Jane Doe</small></p> 
+                              <p class="card-text"><small class="text-body-secondary">11/22/2024</small></p> 
+                              <input type="checkbox" class="btn-check" id="btn-check-1-outlined" Completed autocomplete="off" checked onclick="editProgress()">
                               <label class="btn btn-outline-success" for="btn-check-1-outlined">Completed</label><br>
                           </div>
                       </div>
@@ -53,10 +67,10 @@
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">Go to the movie</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">Bob</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> <!-- Time -->
-                              <input type="checkbox" class="btn-check" id="btn-check-2-outlined" Completed autocomplete="off">
+                              <h5 class="card-title">Go to the movie</h5> 
+                              <p class="card-text"><small class="text-body">Bob</small></p> 
+                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> 
+                              <input type="checkbox" class="btn-check" id="btn-check-2-outlined" Completed autocomplete="off" onclick="editProgress()">
                               <label class="btn btn-outline-success" for="btn-check-2-outlined">Completed</label><br>
                           </div>
                       </div>
@@ -64,10 +78,10 @@
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">Sleep</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">Ross Bob</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary">4/25/2077</small></p> <!-- Time -->
-                              <input type="checkbox" class="btn-check" id="btn-check-3-outlined" Completed autocomplete="off">
+                              <h5 class="card-title">Sleep</h5> 
+                              <p class="card-text"><small class="text-body">Ross Bob</small></p> 
+                              <p class="card-text"><small class="text-body-secondary">4/25/2077</small></p> 
+                              <input type="checkbox" class="btn-check" id="btn-check-3-outlined" Completed autocomplete="off" onclick="editProgress()">
                               <label class="btn btn-outline-success" for="btn-check-3-outlined">Completed</label><br>
                           </div>
                       </div>
@@ -75,10 +89,10 @@
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">Work and Suffer</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">Alice</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary"></small></p> <!-- Time -->
-                              <input type="checkbox" class="btn-check" id="btn-check-4-outlined" Completed autocomplete="off" checked>
+                              <h5 class="card-title">Work and Suffer</h5> 
+                              <p class="card-text"><small class="text-body">Alice</small></p> 
+                              <p class="card-text"><small class="text-body-secondary"></small></p> 
+                              <input type="checkbox" class="btn-check" id="btn-check-4-outlined" Completed autocomplete="off" checked onclick="editProgress()">
                               <label class="btn btn-outline-success" for="btn-check-4-outlined">Completed</label><br>
                           </div>
                       </div>
@@ -86,14 +100,15 @@
                   <div class="col">
                       <div class="card mb-3">
                           <div class="card-body">
-                              <h5 class="card-title">Stare at the wall</h5> <!-- Title -->
-                              <p class="card-text"><small class="text-body">David</small></p> <!-- Username -->
-                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> <!-- Time -->
-                              <input type="checkbox" class="btn-check" id="btn-check-5-outlined" Completed autocomplete="off">
+                              <h5 class="card-title">Stare at the wall</h5> 
+                              <p class="card-text"><small class="text-body">David</small></p> 
+                              <p class="card-text"><small class="text-body-secondary">12/25/2025</small></p> 
+                              <input type="checkbox" class="btn-check" id="btn-check-5-outlined" Completed autocomplete="off" onclick="editProgress()">
                               <label class="btn btn-outline-success" for="btn-check-5-outlined">Completed</label><br>
                           </div>
                       </div>
                 </div>  
+                -->
               <!-- END FIXING CARD-->
           </div>
       </div>
@@ -121,3 +136,9 @@
       </div>
     </div>
   </div>
+
+  <script>
+        window.onload = function() {
+        editProgress();
+        };
+  </script>
