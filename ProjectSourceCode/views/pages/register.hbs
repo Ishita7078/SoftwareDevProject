@@ -1,23 +1,37 @@
 
+<div class = "center">
 <img src="/img/textLogo.jpg" class = "textLogo">
 <img src = "/img/logo.png" class = "logo">
-<h2 class = "pageTitle">Register</h2>
+<h2 class = "registerLoginTitle">Register</h2>
 <form action="/register" method="POST">
-  <div id = "registrationContainer">
-    <label for="username">Username:</label><br>
-    <input class = "registerTextBox" type="text" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input class = "registerTextBox" type="text" name="password"><br>
-    <label for="name">Name:</label><br>
-    <input class = "registerTextBox" type="text" name="name"><br>
-    <label for="email">Email:</label><br>
-    <input class = "registerTextBox" type="text" name="email"><br>
-    <label for="gender">Gender:</label><br>
-    <input class = "registerTextBox" type="text" name="gender"><br>
-    <label for="age">Age:</label><br>
-    <input class = "registerTextBox" type="text" name="age"><br>
-  </div>
-  <div>
+    <div class="mb-1">
+      <label class="form-label" for="username">Username</label><br>
+      <input class = "loginTextBox" type="text" name="username" required><br>
+    </div>
+    <div class="mb-1">
+      <label class="form-label" for="password">Password</label><br>
+      <input class = "loginTextBox" type="text" name="password" required><br>
+    </div>
+    <div class="mb-1">
+      <label class="form-label" for="name">Name</label><br>
+      <input class = "loginTextBox" type="text" name="name" required><br>
+    </div>
+    <div class="mb-1">
+      <label class="form-label" for="email">Email</label><br>
+      <input class = "loginTextBox" type="text" name="email" required><br>
+    </div>
+    <div class="mb-1">
+      <label class="form-label" for="gender">Gender</label><br>
+      <input class = "loginTextBox" type="text" name="gender" required><br>
+    </div>
+    <div class="mb-1">
+      <label class="form-label" for="age">Age</label><br>
+      <input class = "loginTextBox" type="text" name="age" required><br>
+    </div>
     <button type="submit" value="Submit" class = "loginbutton">Register</button>
-  </div>
 </form> 
+<p>
+      Don't have an account?
+      <a href="/login">Login in here</a>
+  </p>
+</div>
