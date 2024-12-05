@@ -9,5 +9,5 @@ VALUES
 
 INSERT INTO todos (todo_id, todo_title, todo_date, todo_username, team_id)
 VALUES
-(1, 'Serving Pancakes','12/5/2024', 'Bob Ross'1),
+(1, 'Serving Pancakes','12/5/2024', 'Bob Ross',1),
 (2, 'Sleep', '12/6/2024', 'Mario', 1);

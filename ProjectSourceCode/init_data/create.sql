@@ -57,3 +57,21 @@ CREATE TABLE files (
   FOREIGN KEY (uploader_username) REFERENCES users(username) ON DELETE CASCADE,
   FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
 );
+
+/* 
+Creating a todo_id for files
+  todo_id: unique identifier for each todo
+  todo_title: title of the todo
+  todo_date: date of the todo
+  todo_username: user assigned to todo (foreign key to users table)
+  team_id: team associated with the todo (foreign key to teams table)
+*/
+CREATE TABLE todos (
+  todo_id SERIAL PRIMARY KEY,
+  todo_title VARCHAR(255) NOT NULL,
+  todo_date VARCHAR(50),
+  todo_username VARCHAR(50) NOT NULL,
+  team_id INT,
+  FOREIGN KEY (todo_username) REFERENCES users(username) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+);
