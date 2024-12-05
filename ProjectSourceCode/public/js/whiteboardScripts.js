@@ -99,6 +99,10 @@ function createNewSticky() {
     newSticky.appendChild(deleteButton);
 
     const stickyContent = document.createElement('p');
+    stickyContent.style.fontSize = "18px;";
+    stickyContent.style.fontWeight = "500;";
+    stickyContent.style.padding = "20px";
+    stickyContent.style.marginTop = "10px";
     stickyContent.contentEditable = 'true';
     stickyContent.textContent = 'Click to edit.';
     newSticky.appendChild(stickyContent);
@@ -109,6 +113,7 @@ function createNewSticky() {
         if (deleteButton.style.display === 'none') {
             deleteButton.style.display = 'block';
             const rect = newSticky.getBoundingClientRect();
+            deleteButton.classList.add('delete-button');
             deleteButton.style.left = `${rect.left + rect.width + 5}px`;
             deleteButton.style.top = `${rect.top + rect.height / 2 - 10}px`;
         } else {
