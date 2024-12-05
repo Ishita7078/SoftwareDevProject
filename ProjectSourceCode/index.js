@@ -96,9 +96,7 @@ app.get('/whiteboard', (req, res) => {
   res.render('pages/whiteboard'); 
 });
 
-app.get('/overview', (req, res) => {
-  res.render('pages/overview'); 
-});
+
 //---------------------multer library for handling file uploads-----------------------
 const multer = require('multer'); 
 //array to track details of uploaded files 
@@ -594,6 +592,50 @@ app.post('/leave-team', async (req, res) => {
     res.redirect('/manage-team');
   }
 });
+
+// ------- overview page routes ---------------------
+const todos = `
+  SELECT
+  todo_id,
+  todo_title,
+  todo_date,
+  todo_username,
+  team_id,
+  todo_completed
+  FROM todos;`;
+
+const announcement = `
+  SELECT
+  team_announcement
+  FROM teams WHERE team_id = 1;`;
+
+db.any(todos)
+.then(todos => {
+    app.get('/overview', (req, res) => {
+      res.render('pages/overview', {
+        todos,
+      });
+  });
+})
+
+
+db.task('get-everything', task => {
+  return task.batch([
+    task.any(todos), //query 1
+    task.any(announcement), //query 2
+  ]);
+})
+  .then(data => {
+    app.get('/overview', (req, res) => {
+      res.render('pages/overview', {
+        todos: data[0],
+        announcement: data[1],
+      });
+  });
+  })
+  .catch(err => {
+    // throw error;
+  });
 
 
 // --------------------  this commmented lines broke my code ---------------
