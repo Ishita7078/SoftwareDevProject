@@ -5,7 +5,7 @@ VALUES
 
 INSERT INTO teams (team_id, team_name, created_at)
 VALUES
-(1, testTeam, NULL);
+(1, 'testTeam', NULL);
 
 INSERT INTO todos (todo_id, todo_title, todo_date, todo_username, team_id)
 VALUES
