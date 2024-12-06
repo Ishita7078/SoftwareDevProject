@@ -5,15 +5,14 @@ html,body{
 body{
     font-family:'Lato', sans-serif;
     font-weight:normal;
-    color:#2D2D2D;
+    color:#404040;
     background: #F4F4FF;
     overflow-y: auto;
     text-align: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    
-
+  
 }
 footer {
     text-align: center; 
@@ -26,9 +25,14 @@ a{
     color: #687CFF;
 }
 nav{
-    background-color: white;
+    background-color: #fff;
     font-size: 24px;
 }
+.navbar {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 
 
 .genericbutton{
@@ -46,6 +50,8 @@ nav{
   color:white;
   font-size:medium;
   font-weight: 500;
+  text-decoration: none;
+
 }
 .navbarContainer{
   display: flex;
@@ -93,17 +99,16 @@ nav{
     display: flex;
     position:absolute;
     left:0;
-    top:70px;
+    top:90px;
     margin-left:10px;
     width:200px;
     min-width: 100px;
     height:auto;
 }
 .pageTitle{
-    margin-top:10px;
-    color:#2D2D2D;
-    font-weight: bolder;
-    font-size:32px;
+    font-weight: 700;
+    font-size:36px;
+    color:#EF3F1C;
 }
 .pageTitleDivide{
     border-color:#D4D3DE; 
@@ -159,7 +164,9 @@ nav{
     position:absolute;
 }
 
+
 #whiteBoardContainer{
+    margin-top: 10px;
     position: relative;
     left:10%;
     width:1200px;
@@ -167,7 +174,8 @@ nav{
     height: 900px;
     min-height: 900px;
     margin-bottom:20px;
-    background-color:#F4F4FF;
+    padding:10px;
+    border-radius: 30px;
 }
 #whiteBoard{
     background-color: white;
@@ -176,7 +184,7 @@ nav{
     min-height: 700px;
     height: 700px;
     position:absolute;
-    top: 70px;   
+    top: 100px;   
     left: 50px;  
     outline: 2px solid #D4D3DE;
     border-radius: 30px;
@@ -188,6 +196,7 @@ nav{
     height:50px;
     right:0;
     top:0;
+    margin: 30px;
     outline: 2px solid #D4D3DE;
     border-radius: 10px;
     display: flex; 
@@ -233,9 +242,10 @@ nav{
     display: flex;
     align-items: center;
     justify-content:space-between;
-    background-color: #fff;
-    padding: 1rem 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
   }
   
   .projectTitle {
@@ -324,4 +334,78 @@ nav{
 }
 .card-title{
   font-weight: 700;
+}
+.team{
+  margin:10px;
+  background-color: #fff;
+  border-radius: 30px;
+  padding:20px;
+  width: 1000px;
+  box-shadow: 1px 13px 32px -12px rgba(130,130,130,1);
+}
+.teamsContainer{
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  align-items: center;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+}
+.teamName{
+  font-weight: 700;
+  font-size: 32px;
+}
+.teamMember{
+  font-weight: bold;
+  font-size: 20px;
+  color:#FF9721;
+}
+.editTeamsButton{
+  background-color: #687CFF;
+  border-style: solid;
+  border-color: #687CFF;
+  padding:10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right:50px;
+  border-radius: 30px;
+  outline-color: #687CFF;
+  width: 150px;
+  min-width: 150px;
+  height:50px;
+  min-height:50px;
+  color:white;
+  font-size:18px;
+  font-weight: 500;
+  text-decoration: none;
+
+}
+.members{
+  color:#707070;
+  font-size: 24px;
+  font-weight: bold;
+}
+.teamTextBox{
+  width: 300px;
+  min-width: 300px;
+  height: 45px;
+  padding: 10px;
+  margin:5px;
+  outline:#D4D3DE;
+  border-style: solid;
+  border-radius: 30px;
+}
+.manageTeamsLabel{
+  font-weight: bold;
+  color:#767676;
+  font-size: 18px;
+}
+.teamLabel{
+  font-weight: bold;
+  font-size: 24px;
+} 
+
+.container{
+  margin-top:20px;
 }
