@@ -30,6 +30,16 @@ Creating a table for the many-to-many relationship from users to teams
   need to define enum beforehand
 */
 CREATE TYPE role AS ENUM ('member', 'admin'); 
+DROP TABLE IF EXISTS team_members;
+CREATE TABLE team_members (
+  username VARCHAR(50) PRIMARY KEY,
+  team_id INT NOT NULL,
+  role role DEFAULT 'member',
+  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+);
+/*
 CREATE TABLE team_members (
   team_id INT NOT NULL,
   username VARCHAR(50) NOT NULL,
@@ -39,6 +49,7 @@ CREATE TABLE team_members (
   FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
+*/
 
 /* 
 Creating a table for files

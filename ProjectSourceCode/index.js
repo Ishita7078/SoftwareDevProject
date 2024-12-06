@@ -472,28 +472,57 @@ app.get('/manage-team', async (req, res) => {
 
 app.post('/create-team', async (req, res) => {
   try {
-    const team_name = req.body.team_name;
     const username = req.session.user.username;
+    const team_name = req.body.team_name;
 
-    // Insert into teams table
-    const insertTeamQuery = `
-      INSERT INTO teams (team_name)
-      VALUES ($1)
-      RETURNING team_id
-    `;
-    const result = await db.one(insertTeamQuery, [team_name]);
-    const team_id = result.team_id;
+    // Check if user is already in a team
+    const userTeam = await db.oneOrNone(
+      'SELECT team_id FROM team_members WHERE username = $1',
+      [username]
+    );
 
-    // Add the creator as admin in team_members
-    const insertMemberQuery = `
-      INSERT INTO team_members (team_id, username, role)
-      VALUES ($1, $2, 'admin')
-    `;
-    await db.none(insertMemberQuery, [team_id, username]);
+    if (userTeam) {
+      // User is already on a team, fetch teams to display them again
+      const adminTeamsQuery = `
+        SELECT t.team_id, t.team_name
+        FROM teams t
+        JOIN team_members tm ON t.team_id = tm.team_id
+        WHERE tm.username = $1 AND tm.role = 'admin'
+      `;
+      const memberTeamsQuery = `
+        SELECT t.team_id, t.team_name
+        FROM teams t
+        JOIN team_members tm ON t.team_id = tm.team_id
+        WHERE tm.username = $1 AND tm.role = 'member'
+      `;
+      const adminTeams = await db.any(adminTeamsQuery, [username]);
+      const memberTeams = await db.any(memberTeamsQuery, [username]);
 
+      return res.render('pages/manage_team', {
+        message: 'You are already on a team and cannot create a new one.',
+        adminTeams,
+        memberTeams
+      });
+    }
+
+    // User not on a team, create a new team
+    const { team_id } = await db.one(
+      'INSERT INTO teams (team_name) VALUES ($1) RETURNING team_id',
+      [team_name]
+    );
+
+    // Add user as admin
+    await db.none(
+      'INSERT INTO team_members (username, team_id, role) VALUES ($1, $2, \'admin\')',
+      [username, team_id]
+    );
+
+    // Redirect to /manage-team so it refetches and shows the new team immediately
     res.redirect('/manage-team');
   } catch (err) {
     console.error('Error creating team:', err);
+    // If there's an error, just redirect to /manage-team
+    // (You can also handle errors more gracefully if desired)
     res.redirect('/manage-team');
   }
 });
