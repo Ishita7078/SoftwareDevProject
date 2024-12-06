@@ -1,19 +1,18 @@
 {{> message}}
-
-<h1 class = "pageTitle">Teams</h1>
-
+<div class = "header">
+<h3 class = "pageTitle">Teams</h3>
+</div>
+<a href="/manage-team" class = "editTeamsButton">Edit Teams</a>
+<div class = "teamsContainer">
 {{#each teams}}
   <div class="team">
-    <h2>{{team_name}}</h2>
-    <h3>Members:</h3>
+    <h2 class = "teamName">{{team_name}}</h2>
+    <h3 class = "members">Members</h3>
     <ul>
       {{#each members}}
-        <li><strong>{{name}}</strong> ({{username}}) - {{email}} - Role: {{role}}</li>
+        <p class = "teamMember"><strong>{{name}}</strong> ({{username}}) - {{email}} - Role: {{role}}</p><br>
       {{/each}}
     </ul>
   </div>
 {{/each}}
-
-<div class="footer">
-  <a href="/manage-team">Add/Remove team members here</a>
 </div>

@@ -1,34 +1,36 @@
 {{> message}}
-
-<h1>Manage Teams</h1>
-
-<h2>Create a New Team</h2>
+<div class = "header">
+<h3 class ="pageTitle">Manage Teams</h3>
+</div>
+<a href="/teams" class = "editTeamsButton">Done</a>
+<div class = "teamsContainer">
+<h2 class = "teamLabel">Create a New Team</h2>
 <form action="/create-team" method="POST">
-  <label for="team_name">Team Name:</label>
-  <input type="text" id="team_name" name="team_name" required>
-  <button type="submit">Create Team</button>
+  <label class="manageTeamsLabel" for="team_name">Team Name</label>
+  <input class = "teamTextBox" type="text" id="team_name" name="team_name" required>
+  <button type="submit" class = "genericbutton">Create Team</button>
 </form>
 
-<h2>Your Teams (Admin)</h2>
+<h2 class = "teamLabel">Your Teams (Admin)</h2>
 {{#each adminTeams}}
   <div class="team">
-    <h3>{{team_name}}</h3>
+    <h3 class = "teamName">{{team_name}}</h3>
     <form action="/add-member" method="POST">
-      <input type="hidden" name="team_id" value="{{team_id}}">
-      <label for="username">Add Member Username:</label>
-      <input type="text" name="username" required>
-      <button type="submit">Add Member</button>
+      <input class = "teamTextBox" type="hidden" name="team_id" value="{{team_id}}">
+      <label class="manageTeamsLabel" for="username">Add Member Username:</label>
+      <input class = "teamTextBox"  type="text" name="username" required>
+      <button class = "genericbutton" type="submit">Add Member</button>
     </form>
     <form action="/remove-member" method="POST">
-      <input type="hidden" name="team_id" value="{{team_id}}">
-      <label for="username">Remove Member Username:</label>
-      <input type="text" name="username" required>
-      <button type="submit">Remove Member</button>
+      <input class = "teamTextBox" type="hidden" name="team_id" value="{{team_id}}">
+      <label  class="manageTeamsLabel" for="username">Remove Member Username:</label>
+      <input class = "teamTextBox" type="text" name="username" required>
+      <button class = "genericbutton" type="submit">Remove Member</button>
     </form>
   </div>
 {{/each}}
 
-<h2>Your Teams (Member)</h2>
+<h2 class = "teamLabel">Your Teams (Member)</h2>
 {{#each memberTeams}}
   <div class="team">
     <h3>{{team_name}}</h3>
@@ -38,3 +40,4 @@
     </form>
   </div>
 {{/each}}
+</div>
