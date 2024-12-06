@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectModal = document.getElementById('projectModal');
   const closeModal = document.getElementById('closeModal');
   const projectForm = document.getElementById('projectForm');
+  const projectsContainer = document.getElementById('projectsContainer');
 
   // Open the modal
   newProjectBtn.addEventListener('click', () => {
@@ -14,34 +15,46 @@ document.addEventListener('DOMContentLoaded', () => {
     projectModal.classList.add('hidden');
   });
 
-  // Handle project creation form submission
+  // Handle form submission to add a new project
   projectForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Get project name from input field
     const projectName = document.getElementById('projectName').value;
-    const teamId = document.getElementById('teamId').value || null;
 
     if (!projectName) {
       alert('Project name is required.');
       return;
     }
 
-    fetch('/api/projects', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ project_name: projectName, team_id: teamId }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          alert('Error: ' + data.error);
-        } else {
-          alert('Project created successfully!');
-          location.reload(); // Refresh to show new project
-        }
-      })
-      .catch((err) => console.error('Error creating project:', err));
+    // Create new project card
+    const projectCard = document.createElement('div');
+    projectCard.classList.add('project-card');
+
+    // Add an image to the project card (optional placeholder image)
+    const projectImage = document.createElement('img');
+    projectImage.src = '/path/to/default-image.jpg'; // Update with your placeholder image
+    projectImage.alt = projectName;
+    projectImage.classList.add('project-image');
+
+    // Add project name as a link
+    const projectTitle = document.createElement('h1');
+    const projectLink = document.createElement('a');
+    projectLink.href = `/overview/${projectName.toLowerCase().replace(/\s+/g, '-')}`; // Generate URL-friendly link
+    projectLink.textContent = projectName;
+
+    projectTitle.appendChild(projectLink);
+
+    // Append image and title to the card
+    projectCard.appendChild(projectImage);
+    projectCard.appendChild(projectTitle);
+
+    // Add the new project card to the container
+    projectsContainer.appendChild(projectCard);
+
+    // Reset form and close the modal
+    projectForm.reset();
+    projectModal.classList.add('hidden');
   });
 });
+

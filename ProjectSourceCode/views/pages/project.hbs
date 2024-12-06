@@ -1,9 +1,12 @@
 <div class="homepage">
   <header class="header">
     <h3 class="pageTitle">Projects</h3>
-    <button class="genericbutton">New Project</button>
+    <!-- Updated New Project Button -->
+    <button id="newProjectBtn" class="genericbutton">New Project</button>
   </header>
-  <div class="project-container">
+
+  <!-- Existing Projects -->
+  <div id="projectsContainer" class="project-container">
     <div class="project-card">
       <img src="/path/to/project-image1.jpg" alt="Project 1" class="project-image" />
       <h1><a href="/overview">The Whiteboard</a></h1>
@@ -17,4 +20,20 @@
       <h1><a href="/overview">Project 3</a></h1>
     </div>
   </div>
+
+  <!-- Modal for Adding New Projects -->
+  <div id="projectModal" class="hidden modal">
+    <div class="modal-content">
+      <button id="closeModal" class="close-button">Close</button>
+      <form id="projectForm">
+        <label for="projectName">Project Name:</label>
+        <input type="text" id="projectName" name="projectName" required>
+        <button type="submit" class="submit-button">Add Project</button>
+      </form>
+    </div>
+  </div>
 </div>
+
+
+<script src="/js/project.js"></script>
+
