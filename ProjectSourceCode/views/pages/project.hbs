@@ -8,28 +8,28 @@
   <!-- Existing Projects -->
   <div id="projectsContainer" class="project-container">
     <div class="project-card">
-      <img src="/path/to/project-image1.jpg" alt="Project 1" class="project-image" />
-      <h1><a href="/overview">The Whiteboard</a></h1>
+      <img src="/img/defaultProjectPhoto.jpg" alt="Project 1" class="project-image" />
+      <h2 class = "projectTitle"><a href="/overview">The Whiteboard</a></h2>
     </div>
     <div class="project-card">
-      <img src="/path/to/project-image2.jpg" alt="Project 2" class="project-image" />
-      <h1><a href="/overview">Project 2</a></h1>
+      <img src="/img/defaultProjectPhoto.jpg" alt="Project 2" class="project-image" />
+      <h2 class = "projectTitle"><a href="/overview">Project 2</a></h2>
     </div>
     <div class="project-card">
-      <img src="/path/to/project-image3.jpg" alt="Project 3" class="project-image" />
-      <h1><a href="/overview">Project 3</a></h1>
+      <img src="/img/defaultProjectPhoto.jpg" alt="Project 3" class="project-image" />
+      <h2 class = "projectTitle"><a href="/overview">Project 3</a></h2>
     </div>
   </div>
 
   <!-- Modal for Adding New Projects -->
   <div id="projectModal" class="hidden modal">
     <div class="modal-content">
-      <button id="closeModal" class="close-button">Close</button>
       <form id="projectForm">
         <label for="projectName">Project Name:</label>
-        <input type="text" id="projectName" name="projectName" required>
-        <button type="submit" class="submit-button">Add Project</button>
+        <input class = "teamTextBox" type="text" id="projectName" name="projectName" required>
+        <button type="submit" class="genericbutton">Add Project</button>
       </form>
+      <button id="closeModal" class="close-button">Close</button>
     </div>
   </div>
 </div>
