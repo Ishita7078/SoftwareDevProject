@@ -134,6 +134,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       const userTeam = await db.oneOrNone(teamQuery, [uploader_id]);
       const team_id = userTeam ? userTeam.team_id : null;
   
+    // Prevent setting visibility to 'team' if user is not part of any team
+      if (visibility === 'team' && !team_id) {
+        return res.status(400).send('You are not part of a team and cannot set visibility to "team".');
+      }
       const filePath = path.join(__dirname, 'uploads', req.file.filename);
   
       // store file inf in DB
@@ -256,13 +260,33 @@ app.post('/edit-file/:id', async (req, res) => {
     if (!file) {
       return res.status(403).send('You are not authorized to edit this file.');
     }
-
-    // Update Visibility in DB
-    await db.none(
-      'UPDATE files SET visibility = $1 WHERE file_id = $2',
-      [newVisibility, file_id]
+  //check wheather the user is a part of team or not 
+  if (newVisibility === 'team') {
+    const userTeam = await db.oneOrNone(
+      `
+      SELECT t.team_id 
+      FROM teams t 
+      JOIN team_members tm ON t.team_id = tm.team_id 
+      WHERE tm.username = $1
+      `,
+      [username]
     );
 
+    if (!userTeam) {
+      return res.status(400).send('You are not part of a team and cannot set visibility to "team".');
+    }
+
+    // if the user is a teammmember then change the visibiity
+    await db.none(
+      'UPDATE files SET visibility = $1, team_id = $2 WHERE file_id = $3',
+      [newVisibility, userTeam.team_id, file_id]
+    );
+  } else {
+    await db.none(
+      'UPDATE files SET visibility = $1, team_id = NULL WHERE file_id = $2',
+      [newVisibility, file_id]
+    );
+  }
     res.redirect('/files');
   } catch (err) {
     console.error('Error during file edit:', err);
