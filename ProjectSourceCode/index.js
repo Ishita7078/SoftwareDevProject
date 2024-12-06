@@ -237,7 +237,7 @@ app.post('/delete-file/:id', async(req, res) => {
     res.redirect('/files');
   } catch (err){
     console.error('Error during Deleteing', err);
-    return res.status(500).send('An Error occured whiکد کle Deleteing the File');
+    return res.status(500).send('An Error occured while Deleteing the File');
   }
 });
 
