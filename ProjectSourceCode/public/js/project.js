@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add an image to the project card (optional placeholder image)
     const projectImage = document.createElement('img');
-    projectImage.src = '/path/to/default-image.jpg'; // Update with your placeholder image
+    projectImage.src = '/img/defaultProjectPhoto.jpg'; // Update with your placeholder image
     projectImage.alt = projectName;
     projectImage.classList.add('project-image');
 
     // Add project name as a link
-    const projectTitle = document.createElement('h1');
+    const projectTitle = document.createElement('h2');
     const projectLink = document.createElement('a');
     projectLink.href = `/overview/${projectName.toLowerCase().replace(/\s+/g, '-')}`; // Generate URL-friendly link
     projectLink.textContent = projectName;
