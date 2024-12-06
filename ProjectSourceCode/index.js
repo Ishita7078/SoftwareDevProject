@@ -88,13 +88,6 @@ app.get('/register', (req, res) => {
   res.render('pages/register'); 
 });
 
-app.get('/project', (req, res) => {
-  res.render('pages/project'); 
-});
-
-app.get('/whiteboard', (req, res) => {
-  res.render('pages/whiteboard'); 
-});
 
 
 //---------------------multer library for handling file uploads-----------------------
@@ -158,6 +151,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 //--------------------route to display the files page------------------------
 app.get('/files', async (req, res) => {
   try {
+    if (!req.session.user) {
+      return res.redirect('/login');
+    }
     const username = req.session.user.username;
 
     // query to find user's team
@@ -699,6 +695,23 @@ db.task('get-everything', task => {
 app.get('/calendar', (req, res) => {
   res.render('pages/calendar', { layout: 'main', title: 'Calendar' });
 });
+
+// ----- Whiteboard and Projects pages -----
+
+app.get('/project', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+    res.render('pages/project'); 
+});
+
+app.get('/whiteboard', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  res.render('pages/whiteboard'); 
+});
+
 
 
 // *****************************************************
