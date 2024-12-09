@@ -1,5 +1,5 @@
-# SoftwareDevProject
-## Brief Application description <img src="https://github.com/Ishita7078/SoftwareDevProject/blob/main/ProjectSourceCode/public/img/logo.png?raw=true" alt="Logo" width="30"/> :
+# SoftwareDevProject     <img src="https://github.com/Ishita7078/SoftwareDevProject/blob/main/ProjectSourceCode/public/img/logo.png?raw=true" alt="Logo" width="30"/> 
+## Brief Application description :
 **Whiteboard** is a dynamic collaborative platform that allows users to manage group progress more easily. The goal of the Whiteboard is to offer a variety of features dedicated to making project management more visual, intuitive, and centralized. 
 
 **Features include:**
