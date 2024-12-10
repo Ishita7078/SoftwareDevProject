@@ -1,3 +1,32 @@
+### Release Notes Week of 12/1/24
+> This week we finished up our site
+### Overview of Improvements
+* Completed styling
+* Fixed bugs
+### New Features
+### Deep:
+* Added feature allowing users to create new projects
+* Fixed Calendar functionality
+### Sepehr:
+* Fixed file routes to ensure shared files only visable to team
+* Added route enabling visability options for files
+* Styled files page
+* Debugged navigation bar
+### Ragan:
+* Added uniform styling to all pages
+* Fixed routes to ensure users have to be logged in to access pages
+### Ishita:
+* Completed user testing
+* Documented test results
+* Created group presentation
+### Alexander:
+* Created and Linked todo tasks to sql
+* Changed code on overview page to allow page to display todos saved in the system
+### Quinn:
+* Altered team structure to align with other pages
+* Debugged teams page 
+
+
 ### Release Notes Week of 11/22/24
 > This week we worked on getting all of our pages functional and improving the user experience. 
 ### Overview of Improvements
